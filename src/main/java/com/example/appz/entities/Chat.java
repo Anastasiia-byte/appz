@@ -7,14 +7,11 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "lessors")
-public class Lessor {
+@Table(name = "chats")
+public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private String surname;
-    private String email;
     @OneToMany
-    private List<Dwelling> dwellings;
+    private List<Message> messages;
 }
