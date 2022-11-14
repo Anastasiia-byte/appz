@@ -19,14 +19,32 @@ public class UserService {
     private UserRepository userRepository;
 
     public UserDTO getById(final long id) {
-        log.info("Retr");
+        log.info("Retrieving a user with id " + id);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " was not found"));
         return UserMapper.INSTANCE.mapUser(user);
     }
 
     public List<UserDTO> getAll() {
+        log.info("Retrieving all users");
         return UserMapper.INSTANCE.mapUserList(userRepository.findAll());
+    }
+
+    public UserDTO create(UserDTO userDTO) {
+        log.info("Creating a new user");
+        User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
+        return UserMapper.INSTANCE.mapUser(userRepository.save(user));
+    }
+
+    public UserDTO update(long id, UserDTO userDTO) {
+        log.info("Updating a user by id " + id);
+        User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
+        return UserMapper.INSTANCE.mapUser(userRepository.save(user));
+    }
+
+    public void delete(long id) {
+        log.info("Deleting a user with id " + id);
+        userRepository.deleteById(id);
     }
 
 }
