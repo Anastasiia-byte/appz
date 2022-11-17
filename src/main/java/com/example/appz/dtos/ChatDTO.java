@@ -1,10 +1,10 @@
 package com.example.appz.dtos;
 
-import com.example.appz.entities.Message;
+import lombok.Data;
 
-import javax.persistence.OneToMany;
 import java.util.List;
 
+@Data
 public class ChatDTO {
     private long id;
     private List<MessageDTO> messages;
