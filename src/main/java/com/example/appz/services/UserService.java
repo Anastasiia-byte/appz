@@ -31,7 +31,7 @@ public class UserService {
     }
 
     public UserDTO create(UserDTO userDTO) {
-        log.info("Creating a new user");
+        log.info("Creating a new user with email" + userDTO.getEmail());
         User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
         return UserMapper.INSTANCE.mapUser(userRepository.save(user));
     }
@@ -46,5 +46,4 @@ public class UserService {
         log.info("Deleting a user with id " + id);
         userRepository.deleteById(id);
     }
-
 }
