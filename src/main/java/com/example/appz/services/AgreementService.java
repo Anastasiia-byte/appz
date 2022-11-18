@@ -25,7 +25,7 @@ public class AgreementService {
         return AgreementMapper.INSTANCE.mapAgreement(agreement);
     }
 
-    public AgreementDTO save(AgreementDTO agreementDTO) {
+    public AgreementDTO create(AgreementDTO agreementDTO) {
         log.info("Creating an new agreement");
         Agreement agreement = AgreementMapper.INSTANCE.mapAgreementDto(agreementDTO);
 

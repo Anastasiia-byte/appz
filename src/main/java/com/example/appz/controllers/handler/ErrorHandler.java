@@ -34,7 +34,7 @@ public class ErrorHandler {
     public ValidationErrorResponse onConstraintValidationException(ConstraintViolationException e) {
         log.error("handleConstraintViolation: exception {}", e.getMessage());
         ValidationErrorResponse error = new ValidationErrorResponse();
-        for (ConstraintViolation violation : e.getConstraintViolations()) {
+        for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
             error.getViolations().add(
                     new Violation(violation.getPropertyPath().toString(), violation.getMessage()));
         }
