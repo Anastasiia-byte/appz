@@ -43,10 +43,10 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
-    public UserDTO update(@PathVariable @Min(0) long id, @Valid @RequestBody UserDTO userDTO) {
+    @PutMapping
+    public UserDTO update(@Valid @RequestBody UserDTO userDTO) {
         log.info("Received request to update a user with id " + userDTO.getId());
-        return userService.update(id, userDTO);
+        return userService.update(userDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -14,14 +14,14 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("dwelling")
+@RequestMapping("/dwelling")
 @Validated
 public class DwellingController {
     @Autowired
     private DwellingService dwellingService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public DwellingDTO getById(@PathVariable @Min(0) long id) {
         log.info("Received request to get dwelling by id " + id);
         return dwellingService.getById(id);
@@ -49,7 +49,7 @@ public class DwellingController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable @Min(0) long id) {
         log.info("Received request to delete dwelling with id " + id);
         dwellingService.delete(id);

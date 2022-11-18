@@ -36,8 +36,8 @@ public class UserService {
         return UserMapper.INSTANCE.mapUser(userRepository.save(user));
     }
 
-    public UserDTO update(long id, UserDTO userDTO) {
-        log.info("Updating a user by id " + id);
+    public UserDTO update(UserDTO userDTO) {
+        log.info("Updating a user with id " + userDTO.getId());
         User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
         return UserMapper.INSTANCE.mapUser(userRepository.save(user));
     }
