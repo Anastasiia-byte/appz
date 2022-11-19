@@ -5,7 +5,6 @@ import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,8 +13,6 @@ public class AgreementDTO {
     private long id;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime date;
-    @NotNull
-    private DwellingDTO dwelling;
     @NotBlank
     private String userSignature;
     @NotBlank
