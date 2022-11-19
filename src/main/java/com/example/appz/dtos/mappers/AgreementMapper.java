@@ -7,15 +7,15 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = AgreementMapperResolver.class)
 public interface AgreementMapper {
     AgreementMapper INSTANCE = Mappers.getMapper(AgreementMapper.class);
 
     Agreement mapAgreementDto(AgreementDTO agreementDTO);
 
-    AgreementDTO mapAgreement(Agreement agreement);
+    AgreementDTO map(Agreement agreement);
 
     List<Agreement> mapAgreementDtoList(List<AgreementDTO> agreementDtoList);
 
-    List<AgreementDTO> mapAgreementList(List<Agreement> agreementList);
+    List<AgreementDTO> map(List<Agreement> agreementList);
 }

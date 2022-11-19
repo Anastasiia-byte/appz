@@ -13,9 +13,9 @@ public interface LessorMapper {
 
     Lessor mapLessorDTO(LessorDTO lessorDTO);
 
-    LessorDTO mapLessor(Lessor lessor);
+    LessorDTO map(Lessor lessor);
 
     List<Lessor> mapLessorDTOList(List<LessorDTO> lessorDTOS);
 
-    List<LessorDTO> mapLessorList(List<Lessor> lessors);
+    List<LessorDTO> map(List<Lessor> lessors);
 }

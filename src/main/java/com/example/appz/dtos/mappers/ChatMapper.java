@@ -7,15 +7,15 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = ChatMapperResolver.class)
 public interface ChatMapper {
     ChatMapper INSTANCE = Mappers.getMapper(ChatMapper.class);
 
     Chat mapChatDto(ChatDTO chatDTO);
 
-    ChatDTO mapChat(Chat chat);
+    ChatDTO map(Chat chat);
 
     List<Chat> mapChatDtoList(List<ChatDTO> chatDtoList);
 
-    List<ChatDTO> mapChatList(List<Chat> chatList);
+    List<ChatDTO> map(List<Chat> chatList);
 }

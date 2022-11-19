@@ -13,9 +13,9 @@ public interface DwellingMapper {
 
     Dwelling mapDwellingDto(DwellingDTO agreementDTO);
 
-    DwellingDTO mapDwelling(Dwelling agreement);
+    DwellingDTO map(Dwelling agreement);
 
     List<Dwelling> mapDwellingDtoList(List<DwellingDTO> dwellingDtoList);
 
-    List<DwellingDTO> mapDwellingList(List<Dwelling> dwellingList);
+    List<DwellingDTO> map(List<Dwelling> dwellingList);
 }

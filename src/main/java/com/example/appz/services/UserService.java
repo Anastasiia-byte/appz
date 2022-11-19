@@ -22,24 +22,24 @@ public class UserService {
         log.info("Retrieving a user with id " + id);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " was not found"));
-        return UserMapper.INSTANCE.mapUser(user);
+        return UserMapper.INSTANCE.map(user);
     }
 
     public List<UserDTO> getAll() {
         log.info("Retrieving all users");
-        return UserMapper.INSTANCE.mapUserList(userRepository.findAll());
+        return UserMapper.INSTANCE.map(userRepository.findAll());
     }
 
     public UserDTO create(UserDTO userDTO) {
         log.info("Creating a new user with email" + userDTO.getEmail());
         User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
-        return UserMapper.INSTANCE.mapUser(userRepository.save(user));
+        return UserMapper.INSTANCE.map(userRepository.save(user));
     }
 
     public UserDTO update(UserDTO userDTO) {
         log.info("Updating a user with id " + userDTO.getId());
         User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
-        return UserMapper.INSTANCE.mapUser(userRepository.save(user));
+        return UserMapper.INSTANCE.map(userRepository.save(user));
     }
 
     public void delete(long id) {

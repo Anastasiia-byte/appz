@@ -22,14 +22,14 @@ public class ChatService {
         Chat chat = chatRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Chat with id " + id + " was not found"));
 
-        return ChatMapper.INSTANCE.mapChat(chat);
+        return ChatMapper.INSTANCE.map(chat);
     }
 
     public List<ChatDTO> getAll() {
         log.info("Retrieving al chats");
         List<Chat> allChats = chatRepository.findAll();
 
-        return ChatMapper.INSTANCE.mapChatList(allChats);
+        return ChatMapper.INSTANCE.map(allChats);
     }
 
     public ChatDTO create(ChatDTO chatDTO) {
@@ -38,7 +38,7 @@ public class ChatService {
 
         Chat savedChat = chatRepository.save(chat);
 
-        return ChatMapper.INSTANCE.mapChat(savedChat);
+        return ChatMapper.INSTANCE.map(savedChat);
     }
 
     public ChatDTO update(ChatDTO chatDTO) {
@@ -47,7 +47,7 @@ public class ChatService {
 
         Chat updatedChat = chatRepository.save(chat);
 
-        return ChatMapper.INSTANCE.mapChat(updatedChat);
+        return ChatMapper.INSTANCE.map(updatedChat);
     }
 
     public void delete(long id) {

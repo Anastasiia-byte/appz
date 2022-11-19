@@ -22,14 +22,14 @@ public class DwellingService {
         Dwelling dwelling = dwellingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Dwelling with id " + id + " was not found"));
 
-        return DwellingMapper.INSTANCE.mapDwelling(dwelling);
+        return DwellingMapper.INSTANCE.map(dwelling);
     }
 
     public List<DwellingDTO> getAll() {
         log.info("Retrieving all dwellings");
         List<Dwelling> allDwellings = dwellingRepository.findAll();
 
-        return DwellingMapper.INSTANCE.mapDwellingList(allDwellings);
+        return DwellingMapper.INSTANCE.map(allDwellings);
     }
 
     public DwellingDTO create(DwellingDTO dwellingDTO) {
@@ -38,7 +38,7 @@ public class DwellingService {
 
         Dwelling savedDwelling = dwellingRepository.save(dwelling);
 
-        return DwellingMapper.INSTANCE.mapDwelling(savedDwelling);
+        return DwellingMapper.INSTANCE.map(savedDwelling);
     }
 
     public DwellingDTO update(DwellingDTO dwellingDTO) {
@@ -47,7 +47,7 @@ public class DwellingService {
 
         Dwelling updatedDwelling = dwellingRepository.save(dwelling);
 
-        return DwellingMapper.INSTANCE.mapDwelling(updatedDwelling);
+        return DwellingMapper.INSTANCE.map(updatedDwelling);
     }
 
     public void delete(long id) {

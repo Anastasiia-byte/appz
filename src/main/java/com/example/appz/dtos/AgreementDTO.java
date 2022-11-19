@@ -13,6 +13,7 @@ public class AgreementDTO {
     private long id;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime date;
+    private DwellingDTO dwelling;
     @NotBlank
     private String userSignature;
     @NotBlank

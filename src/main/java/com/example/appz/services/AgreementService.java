@@ -22,7 +22,7 @@ public class AgreementService {
         Agreement agreement = agreementRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Agreement with id " + id + " was not found"));
 
-        return AgreementMapper.INSTANCE.mapAgreement(agreement);
+        return AgreementMapper.INSTANCE.map(agreement);
     }
 
     public AgreementDTO create(AgreementDTO agreementDTO) {
@@ -31,7 +31,7 @@ public class AgreementService {
 
         Agreement savedAgreement = agreementRepository.save(agreement);
 
-        return AgreementMapper.INSTANCE.mapAgreement(savedAgreement);
+        return AgreementMapper.INSTANCE.map(savedAgreement);
     }
 
     public void delete(long id) {
@@ -41,7 +41,7 @@ public class AgreementService {
 
     public List<AgreementDTO> getAll() {
         log.info("Retrieving all agreements");
-        return AgreementMapper.INSTANCE.mapAgreementList(agreementRepository.findAll());
+        return AgreementMapper.INSTANCE.map(agreementRepository.findAll());
     }
 
     public AgreementDTO update(AgreementDTO agreementDTO) {
@@ -50,6 +50,6 @@ public class AgreementService {
 
         Agreement updatedAgreement = agreementRepository.save(agreement);
 
-        return AgreementMapper.INSTANCE.mapAgreement(updatedAgreement);
+        return AgreementMapper.INSTANCE.map(updatedAgreement);
     }
 }

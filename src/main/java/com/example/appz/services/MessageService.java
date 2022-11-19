@@ -22,14 +22,14 @@ public class MessageService {
         Message message = messageRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Message with id " + id + " was not found"));
 
-        return MessageMapper.INSTANCE.mapMessage(message);
+        return MessageMapper.INSTANCE.map(message);
     }
 
     public List<MessageDTO> getAll() {
         log.info("Retrieving all messages");
         List<Message> allMessages = messageRepository.findAll();
 
-        return MessageMapper.INSTANCE.mapMessageList(allMessages);
+        return MessageMapper.INSTANCE.map(allMessages);
     }
 
     public MessageDTO create(MessageDTO messageDTO) {
@@ -38,6 +38,6 @@ public class MessageService {
 
         Message savedMessage = messageRepository.save(message);
 
-        return MessageMapper.INSTANCE.mapMessage(savedMessage);
+        return MessageMapper.INSTANCE.map(savedMessage);
     }
 }
