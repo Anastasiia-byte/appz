@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/dwelling")
+@RequestMapping("/api/dwelling")
 @Validated
 public class DwellingController {
     @Autowired

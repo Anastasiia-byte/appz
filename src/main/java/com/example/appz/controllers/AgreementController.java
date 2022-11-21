@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("agreement")
+@RequestMapping("/api/agreement")
 @Validated
 public class AgreementController {
     @Autowired

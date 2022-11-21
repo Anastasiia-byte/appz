@@ -1,7 +1,10 @@
 package com.example.appz.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "notifications")
 public class Notification {

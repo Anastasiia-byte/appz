@@ -9,8 +9,9 @@ import javax.validation.constraints.NotBlank;
 public class MessageDTO {
     @Min(0)
     private long id;
-    private int senderId;
-    private int receiverId;
+    private long chatId;
+    private long senderId;
+    private long receiverId;
     @NotBlank
     private String text;
 }

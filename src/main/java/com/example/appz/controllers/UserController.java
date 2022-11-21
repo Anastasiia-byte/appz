@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/user")
 @Validated
 public class UserController {
 

@@ -20,7 +20,7 @@ public class MessageController {
     @MessageMapping("/chat/{id}")
     @SendTo("/queue/{id}")
     public MessageDTO send(@Valid MessageDTO messageDTO) {
-        log.info("Received a message. Chat id - " + messageDTO.getId());
+        log.info("Received a message. Chat id - " + messageDTO.getChatId());
         return messageService.create(messageDTO);
     }
 }

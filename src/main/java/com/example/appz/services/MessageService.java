@@ -17,27 +17,16 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public MessageDTO getById(long id) {
-        log.info("Retrieving message with id " + id);
-        Message message = messageRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Message with id " + id + " was not found"));
-
-        return MessageMapper.INSTANCE.map(message);
-    }
-
-    public List<MessageDTO> getAll() {
-        log.info("Retrieving all messages");
-        List<Message> allMessages = messageRepository.findAll();
-
-        return MessageMapper.INSTANCE.map(allMessages);
-    }
+    @Autowired
+    private NotificationService notificationService;
 
     public MessageDTO create(MessageDTO messageDTO) {
         log.info("Creating new message");
         Message message = MessageMapper.INSTANCE.mapMessageDto(messageDTO);
-
         Message savedMessage = messageRepository.save(message);
 
-        return MessageMapper.INSTANCE.map(savedMessage);
+        MessageDTO createdMessage = MessageMapper.INSTANCE.map(savedMessage);
+        notificationService.send(createdMessage);
+        return createdMessage;
     }
 }
