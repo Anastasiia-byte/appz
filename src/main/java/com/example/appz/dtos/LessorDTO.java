@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-public class LessorDTO {
+public class LessorDTO implements Hashable {
     @Min(0)
     private long id;
     @NotBlank
@@ -19,4 +19,9 @@ public class LessorDTO {
     private String surname;
     @Email
     private String email;
+
+    @Override
+    public String getSecretData() {
+        return id + name + surname + email;
+    }
 }

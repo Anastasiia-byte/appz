@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Slf4j
@@ -27,8 +28,24 @@ public class ChatController {
         return chatService.getById(id);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{userId}")
     public List<ChatDTO> getAllForUser(@PathVariable @Min(0) long userId) {
-        log.info("");
+        log.info("Received request to get all chats for user " + userId);
+        return chatService.getAllForUser(userId);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable @Min(0) long id) {
+        log.info("Received request to delete chat " + id);
+        chatService.delete(id);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping
+    public void deleteByIds(@RequestBody @NotEmpty List<Long> ids) {
+        log.info("Received request to delete chats by ids");
+        chatService.deleteByIds(ids);
+    }
 }

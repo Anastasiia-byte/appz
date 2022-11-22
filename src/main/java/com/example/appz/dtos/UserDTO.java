@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Data
-public class UserDTO {
+public class UserDTO implements Hashable {
     @Min(0)
     private long id;
     @NotBlank
@@ -24,4 +24,9 @@ public class UserDTO {
     private Date birthDate;
     @NotEmpty
     private Set<Role> roles;
+
+    @Override
+    public String getSecretData() {
+        return id + name + surname + email;
+    }
 }

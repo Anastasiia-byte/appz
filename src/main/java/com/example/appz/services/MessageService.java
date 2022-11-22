@@ -8,6 +8,7 @@ import com.example.appz.repositories.MessageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class MessageService {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private ChatService chatService;
+
+    @Transactional
     public MessageDTO create(MessageDTO messageDTO) {
         log.info("Creating new message");
         Message message = MessageMapper.INSTANCE.mapMessageDto(messageDTO);
@@ -27,6 +32,7 @@ public class MessageService {
 
         MessageDTO createdMessage = MessageMapper.INSTANCE.map(savedMessage);
         notificationService.send(createdMessage);
+        chatService.addMessage(createdMessage);
         return createdMessage;
     }
 }

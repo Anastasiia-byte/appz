@@ -8,6 +8,7 @@ import com.example.appz.repositories.DwellingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class DwellingService {
         return DwellingMapper.INSTANCE.map(savedDwelling);
     }
 
+    @Transactional
     public DwellingDTO update(DwellingDTO dwellingDTO) {
         log.info("Updating dwelling with id " + dwellingDTO.getId());
         Dwelling dwelling = DwellingMapper.INSTANCE.mapDwellingDto(dwellingDTO);

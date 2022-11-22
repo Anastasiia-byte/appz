@@ -8,6 +8,7 @@ import com.example.appz.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class UserService {
         return UserMapper.INSTANCE.map(userRepository.save(user));
     }
 
+    @Transactional
     public UserDTO update(UserDTO userDTO) {
         log.info("Updating a user with id " + userDTO.getId());
         User user = UserMapper.INSTANCE.mapUserDTO(userDTO);

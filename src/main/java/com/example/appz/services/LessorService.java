@@ -8,6 +8,7 @@ import com.example.appz.repositories.LessorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class LessorService {
         return LessorMapper.INSTANCE.map(lessor);
     }
 
+    @Transactional
     public LessorDTO update(LessorDTO lessorDTO) {
         log.info("Updating lessor with id " + lessorDTO.getId());
         return LessorMapper.INSTANCE.map(lessorRepository.save(LessorMapper.INSTANCE.mapLessorDTO(lessorDTO)));

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class NotificationService {
         return NotificationMapper.INSTANCE.map(notificationRepository.getAllByUser_Id(userId));
     }
 
+    @Transactional
     public void send(MessageDTO messageDTO) {
         log.info("Sending a notification about a new message. Receiver id - " + messageDTO.getReceiverId());
         NotificationDTO notificationDTO = new NotificationDTO();

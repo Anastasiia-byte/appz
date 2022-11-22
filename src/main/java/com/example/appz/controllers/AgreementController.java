@@ -1,6 +1,7 @@
 package com.example.appz.controllers;
 
 import com.example.appz.dtos.AgreementDTO;
+import com.example.appz.dtos.CreateAgreementDTO;
 import com.example.appz.services.AgreementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,9 @@ public class AgreementController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public AgreementDTO create(@Valid @RequestBody AgreementDTO agreementDTO) {
-        log.info("Received request to create new agreement");
-        return agreementService.create(agreementDTO);
+    public AgreementDTO create(@Valid @RequestBody CreateAgreementDTO createAgreementDTO) {
+        log.info("Received request to create new agreement for user " + createAgreementDTO.getUserId());
+        return null;
     }
 
     @ResponseStatus(HttpStatus.OK)
