@@ -8,12 +8,14 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 
 @Service
 public class DigitalSignatureService {
 
-    private final PublicKey publicKey;
+    private PublicKey publicKey;
 
     private final PrivateKey privateKey;
 
@@ -28,6 +30,10 @@ public class DigitalSignatureService {
 
     public PublicKey getPublicKey() {
         return publicKey;
+    }
+
+    public PublicKey setPublicKey(byte[] keyEncoded) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        return KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(keyEncoded));
     }
 
     public String createDigitalSignature(Hashable dataObject) throws NoSuchAlgorithmException, NoSuchPaddingException,

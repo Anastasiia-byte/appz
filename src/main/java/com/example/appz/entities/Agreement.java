@@ -16,6 +16,8 @@ public class Agreement {
     private LocalDateTime date;
     @OneToOne
     private Dwelling dwelling;
+    private long userId;
+    private byte[] publicKey;
     private String userSignature;
     private String lessorSignature;
     private boolean complete;

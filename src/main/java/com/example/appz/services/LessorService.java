@@ -46,4 +46,9 @@ public class LessorService {
         log.info("Deleting lessor with id " + id);
         lessorRepository.deleteById(id);
     }
+
+    public LessorDTO getByDwellingId(long dwellingId) {
+        log.info("Getting lessor by dwelling id " + dwellingId);
+        return LessorMapper.INSTANCE.map(lessorRepository.getByDwellingId(dwellingId));
+    }
 }

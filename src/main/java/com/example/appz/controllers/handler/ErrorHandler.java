@@ -1,5 +1,6 @@
 package com.example.appz.controllers.handler;
 
+import com.example.appz.exceptions.AgreementCreationException;
 import com.example.appz.exceptions.ApiError;
 import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.exceptions.validation.ValidationErrorResponse;
@@ -25,6 +26,15 @@ public class ErrorHandler {
     public ResponseEntity<Object> onEntityNotFoundException(EntityNotFoundException ex){
         log.error("handleEntityNotFoundException: exception {}", ex.getMessage());
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(AgreementCreationException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> onAgreementCreationException(AgreementCreationException ex){
+        log.error("handleAgreementCreationException: exception {}", ex.getMessage());
+        ApiError apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY);
         apiError.setMessage(ex.getMessage());
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
