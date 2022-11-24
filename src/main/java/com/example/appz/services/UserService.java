@@ -7,6 +7,7 @@ import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class UserService {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -34,6 +37,7 @@ public class UserService {
     public UserDTO create(UserDTO userDTO) {
         log.info("Creating a new user with email" + userDTO.getEmail());
         User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return UserMapper.INSTANCE.map(userRepository.save(user));
     }
 

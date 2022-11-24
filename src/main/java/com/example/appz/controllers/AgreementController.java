@@ -43,14 +43,14 @@ public class AgreementController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping
+    @PutMapping("/update")
     public AgreementDTO update(@Valid @RequestBody AgreementDTO agreementDTO) {
         log.info("Received request to update agreement with id " + agreementDTO.getId());
         return agreementService.update(agreementDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable @Min(0) long id) {
         log.info("Received request to delete agreement with id " + id);
         agreementService.delete(id);

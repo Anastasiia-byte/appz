@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.naming.AuthenticationException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
@@ -31,10 +32,19 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(AgreementCreationException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<Object> onAgreementCreationException(AgreementCreationException ex){
         log.error("handleAgreementCreationException: exception {}", ex.getMessage());
         ApiError apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY);
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<Object> onAuthenticationException(AuthenticationException ex) {
+        log.error("handleAuthenticationException: exception {}", ex.getMessage());
+        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN);
         apiError.setMessage(ex.getMessage());
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }

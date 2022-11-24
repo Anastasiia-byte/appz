@@ -16,6 +16,7 @@ public class User {
     private String name;
     private String surname;
     private String email;
+    private String password;
     private Date birthDate;
 
     @Enumerated(EnumType.ORDINAL)

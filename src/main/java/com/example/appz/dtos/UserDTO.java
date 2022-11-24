@@ -2,6 +2,7 @@ package com.example.appz.dtos;
 
 import com.example.appz.entities.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.validation.constraints.*;
@@ -20,6 +21,8 @@ public class UserDTO implements Hashable {
     private String surname;
     @Email
     private String email;
+    @NotBlank
+    private String password;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
     @NotEmpty
