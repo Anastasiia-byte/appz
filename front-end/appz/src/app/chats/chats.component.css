@@ -1,0 +1,25 @@
+.chats-container {
+  margin: 10px;
+  background-color: #faebd7;
+}
+
+.chats-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-container {
+  display: flex;
+  gap: 20px;
+}
+
+.chat {
+  cursor: pointer;
+  transition: .5s;
+}
+
+.chat:hover {
+  background-color: #f5d09f;
+  transition: .5s;
+}

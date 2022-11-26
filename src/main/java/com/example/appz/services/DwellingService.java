@@ -17,39 +17,42 @@ import java.util.List;
 public class DwellingService {
     @Autowired
     private DwellingRepository dwellingRepository;
+    
+    @Autowired
+    private DwellingMapper dwellingMapper;
 
     public DwellingDTO getById(long id) {
         log.info("Retrieving dwelling with id " + id);
         Dwelling dwelling = dwellingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Dwelling with id " + id + " was not found"));
 
-        return DwellingMapper.INSTANCE.map(dwelling);
+        return dwellingMapper.map(dwelling);
     }
 
     public List<DwellingDTO> getAll() {
         log.info("Retrieving all dwellings");
         List<Dwelling> allDwellings = dwellingRepository.findAll();
 
-        return DwellingMapper.INSTANCE.map(allDwellings);
+        return dwellingMapper.map(allDwellings);
     }
 
     public DwellingDTO create(DwellingDTO dwellingDTO) {
         log.info("Creating new dwelling");
-        Dwelling dwelling = DwellingMapper.INSTANCE.mapDwellingDto(dwellingDTO);
+        Dwelling dwelling = dwellingMapper.mapDwellingDto(dwellingDTO);
 
         Dwelling savedDwelling = dwellingRepository.save(dwelling);
 
-        return DwellingMapper.INSTANCE.map(savedDwelling);
+        return dwellingMapper.map(savedDwelling);
     }
 
     @Transactional
     public DwellingDTO update(DwellingDTO dwellingDTO) {
         log.info("Updating dwelling with id " + dwellingDTO.getId());
-        Dwelling dwelling = DwellingMapper.INSTANCE.mapDwellingDto(dwellingDTO);
+        Dwelling dwelling = dwellingMapper.mapDwellingDto(dwellingDTO);
 
         Dwelling updatedDwelling = dwellingRepository.save(dwelling);
 
-        return DwellingMapper.INSTANCE.map(updatedDwelling);
+        return dwellingMapper.map(updatedDwelling);
     }
 
     public void delete(long id) {

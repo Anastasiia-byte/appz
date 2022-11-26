@@ -24,15 +24,18 @@ public class MessageService {
     @Autowired
     private ChatService chatService;
 
+    @Autowired
+    private MessageMapper messageMapper;
+
     @Transactional
-    public MessageDTO create(MessageDTO messageDTO) {
+    public MessageDTO create(MessageDTO messageDTO, long chatId) {
         log.info("Creating new message");
-        Message message = MessageMapper.INSTANCE.mapMessageDto(messageDTO);
+        Message message = messageMapper.mapMessageDto(messageDTO);
         Message savedMessage = messageRepository.save(message);
 
-        MessageDTO createdMessage = MessageMapper.INSTANCE.map(savedMessage);
-        notificationService.send(createdMessage);
-        chatService.addMessage(createdMessage);
+        MessageDTO createdMessage = messageMapper.map(savedMessage);
+        notificationService.send(createdMessage, chatId);
+        chatService.addMessage(createdMessage, chatId);
         return createdMessage;
     }
 }

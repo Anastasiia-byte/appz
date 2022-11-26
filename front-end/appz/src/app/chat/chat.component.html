@@ -1,0 +1,27 @@
+<mat-card class="chat-container">
+  <mat-card-content class="chat-content">
+    <div class="chat-messages">
+      <div *ngIf="chat?.messages">
+        <div class="message" *ngFor="let receivedMessage of chat.messages"
+             [class.user-message]="receivedMessage.senderId == myId"
+             [class.consultant-message]="receivedMessage.senderId != myId">
+          <span>{{receivedMessage.text}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="message-container">
+      <mat-form-field  class="message-input">
+        <input matInput [(ngModel)]="message">
+      </mat-form-field>
+      <div class="send-button">
+        <button mat-mini-fab color="primary" (click)="sendMessage()">
+          <mat-icon>send</mat-icon>
+        </button>
+      </div>
+    </div>
+    <button mat-mini-fab color="primary" (click)="sendMessage2()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>

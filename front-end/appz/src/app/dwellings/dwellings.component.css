@@ -1,0 +1,23 @@
+.dwellings-container {
+  margin: 10px;
+  background-color: #faebd7;
+}
+
+.dwellings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dwelling-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.dwelling-img, .dwelling-img-container {
+  width: 100%;
+}
+
+.chat-button {
+  background-color: #fcdfb8;
+}

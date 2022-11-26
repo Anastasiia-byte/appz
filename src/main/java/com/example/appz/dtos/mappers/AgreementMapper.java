@@ -7,10 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = AgreementMapperResolver.class)
+@Mapper(componentModel = "spring", uses = {AgreementMapperResolver.class})
 public interface AgreementMapper {
-    AgreementMapper INSTANCE = Mappers.getMapper(AgreementMapper.class);
-
     Agreement mapAgreementDto(AgreementDTO agreementDTO);
 
     AgreementDTO map(Agreement agreement);

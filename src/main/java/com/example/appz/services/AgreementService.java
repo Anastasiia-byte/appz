@@ -43,13 +43,16 @@ public class AgreementService {
 
     @Autowired
     private LessorService lessorService;
+    
+    @Autowired
+    private AgreementMapper agreementMapper;
 
     public AgreementDTO getById(long id) {
         log.info("Retrieving an agreement with id " + id);
         Agreement agreement = agreementRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Agreement with id " + id + " was not found"));
 
-        return AgreementMapper.INSTANCE.map(agreement);
+        return agreementMapper.map(agreement);
     }
 
     @Transactional
@@ -67,7 +70,7 @@ public class AgreementService {
         agreementDTO.setPublicKey(digitalSignatureService.getPublicKey().getEncoded());
         agreementDTO.setComplete(false);
 
-        return AgreementMapper.INSTANCE.map(agreementRepository.save(AgreementMapper.INSTANCE.mapAgreementDto(agreementDTO)));
+        return agreementMapper.map(agreementRepository.save(agreementMapper.mapAgreementDto(agreementDTO)));
     }
 
     public void delete(long id) {
@@ -77,7 +80,7 @@ public class AgreementService {
 
     public List<AgreementDTO> getAll() {
         log.info("Retrieving all agreements");
-        return AgreementMapper.INSTANCE.map(agreementRepository.findAll());
+        return agreementMapper.map(agreementRepository.findAll());
     }
 
     @Transactional
@@ -107,6 +110,6 @@ public class AgreementService {
         }
 
         agreementDTO.setComplete(true);
-        return AgreementMapper.INSTANCE.map(agreementRepository.save(AgreementMapper.INSTANCE.mapAgreementDto(agreementDTO)));
+        return agreementMapper.map(agreementRepository.save(agreementMapper.mapAgreementDto(agreementDTO)));
     }
 }

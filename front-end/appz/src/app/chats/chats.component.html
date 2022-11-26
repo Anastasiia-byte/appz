@@ -1,0 +1,11 @@
+<mat-card class="chats-container">
+  <mat-card-content class="chats-content">
+    <mat-card class="chat" *ngFor="let chat of chats" [routerLink]="['/chat', chat.id]">
+      <mat-card-content class="chat-container">
+        <span>User Name</span>
+        <p><b>User Name:</b> {{chat?.messages[chat.messages.length - 1].text}}</p>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>
+

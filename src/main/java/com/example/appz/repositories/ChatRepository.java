@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
 
-    @Query(value = "select * from chats c join messages m on c.id = m.chat where m.receiver = :userId", nativeQuery = true)
+    @Query(value = "select distinct c.id from chats c inner join chats_messages cm on c.id = cm.chat_id inner join messages m on cm.messages_id = m.id where m.receiver_id = :userId or m.sender_id = :userId", nativeQuery = true)
     List<Chat> getAllByUser(long userId);
 
 }

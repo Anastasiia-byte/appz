@@ -18,28 +18,31 @@ public class LessorService {
 
     @Autowired
     private LessorRepository lessorRepository;
+    
+    @Autowired
+    private LessorMapper lessorMapper;
 
     public LessorDTO getById(long id) {
         log.info("Retrieving lessor with id " + id);
-        return LessorMapper.INSTANCE.map(lessorRepository.findById(id)
+        return lessorMapper.map(lessorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Lessor with id " + id + " was not found")));
     }
 
     public List<LessorDTO> getAll() {
         log.info("Retrieving all lessors");
-        return LessorMapper.INSTANCE.map(lessorRepository.findAll());
+        return lessorMapper.map(lessorRepository.findAll());
     }
 
     public LessorDTO create(LessorDTO lessorDTO) {
         log.info("Creating new lessor with email " + lessorDTO.getEmail());
-        Lessor lessor = lessorRepository.save(LessorMapper.INSTANCE.mapLessorDTO(lessorDTO));
-        return LessorMapper.INSTANCE.map(lessor);
+        Lessor lessor = lessorRepository.save(lessorMapper.mapLessorDTO(lessorDTO));
+        return lessorMapper.map(lessor);
     }
 
     @Transactional
     public LessorDTO update(LessorDTO lessorDTO) {
         log.info("Updating lessor with id " + lessorDTO.getId());
-        return LessorMapper.INSTANCE.map(lessorRepository.save(LessorMapper.INSTANCE.mapLessorDTO(lessorDTO)));
+        return lessorMapper.map(lessorRepository.save(lessorMapper.mapLessorDTO(lessorDTO)));
     }
 
     public void delete(long id) {
@@ -49,6 +52,6 @@ public class LessorService {
 
     public LessorDTO getByDwellingId(long dwellingId) {
         log.info("Getting lessor by dwelling id " + dwellingId);
-        return LessorMapper.INSTANCE.map(lessorRepository.getByDwellingId(dwellingId));
+        return lessorMapper.map(lessorRepository.getByDwellingId(dwellingId));
     }
 }

@@ -21,22 +21,25 @@ public class NotificationService {
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
+    
+    @Autowired
+    private NotificationMapper notificationMapper;
 
     public List<NotificationDTO> getAllForUser(long userId) {
         log.info("Retrieving all notifications for user " + userId);
-        return NotificationMapper.INSTANCE.map(notificationRepository.getAllByUser_Id(userId));
+        return notificationMapper.map(notificationRepository.getAllByUser_Id(userId));
     }
 
     @Transactional
-    public void send(MessageDTO messageDTO) {
+    public void send(MessageDTO messageDTO, long chatId) {
         log.info("Sending a notification about a new message. Receiver id - " + messageDTO.getReceiverId());
         NotificationDTO notificationDTO = new NotificationDTO();
         notificationDTO.setMessageId(messageDTO.getId());
         notificationDTO.setUserId(messageDTO.getReceiverId());
         notificationDTO.setRead(false);
 
-        notificationRepository.save(NotificationMapper.INSTANCE.mapNotificationDTO(notificationDTO));
-        simpMessagingTemplate.convertAndSend("/queue/notification/" + messageDTO.getChatId(), notificationDTO);
+        notificationRepository.save(notificationMapper.mapNotificationDTO(notificationDTO));
+        simpMessagingTemplate.convertAndSend("/queue/notification/" + chatId, notificationDTO);
     }
 
     public void delete(long id) {

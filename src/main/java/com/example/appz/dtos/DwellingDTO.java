@@ -11,8 +11,14 @@ public class DwellingDTO {
     @NotBlank
     @Size(min = 2)
     private String name;
+    @NotBlank
+    private String photo;
+    @NotBlank
+    private String location;
     @Positive
-    private double price;
+    private int numberOfRooms;
+    private boolean arranged;
+    private boolean balcony;
     @NotBlank
     private String description;
 }

@@ -13,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/chat")
 @Validated
@@ -29,10 +30,17 @@ public class ChatController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{userId}")
+    @GetMapping("/all/{userId}")
     public List<ChatDTO> getAllForUser(@PathVariable @Min(0) long userId) {
         log.info("Received request to get all chats for user " + userId);
         return chatService.getAllForUser(userId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public ChatDTO create() {
+        log.info("Received request to create new chat");
+        return chatService.create();
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -103,9 +103,11 @@
                             <artifactId>lombok-mapstruct-binding</artifactId>
                             <version>0.1.0</version>
                         </dependency>
-
-
                     </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
+                        <arg>-Amapstruct.defaultComponentModel=spring</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,45 @@
+.chat-container {
+  margin: 10px;
+  background-color: #faebd7;
+}
+
+.chat-content {
+
+}
+
+.chat-messages {
+  padding: 20px;
+  height: 400px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.message-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.message-input {
+  width: 92%;
+}
+
+.send-button {
+
+}
+
+.message {
+  max-width: fit-content;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.user-message {
+  margin-left: auto;
+  background-color: #dcdcff;
+}
+
+.consultant-message {
+  background-color: #fcdfb8;
+}

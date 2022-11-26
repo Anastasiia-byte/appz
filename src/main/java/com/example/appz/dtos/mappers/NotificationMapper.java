@@ -7,10 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface NotificationMapper {
-    NotificationMapper INSTANCE = Mappers.getMapper(NotificationMapper.class);
-
     Notification mapNotificationDTO(NotificationDTO notificationDTO);
 
     NotificationDTO map(Notification notification);

@@ -7,10 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = ChatMapperResolver.class)
+@Mapper(componentModel = "spring", uses = {ChatMapperResolver.class, MessageMapperResolver.class})
 public interface ChatMapper {
-    ChatMapper INSTANCE = Mappers.getMapper(ChatMapper.class);
-
     Chat mapChatDto(ChatDTO chatDTO);
 
     ChatDTO map(Chat chat);

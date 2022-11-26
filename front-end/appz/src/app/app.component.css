@@ -1,0 +1,35 @@
+.nav-bar {
+  display: flex;
+  gap: 30px;
+}
+
+.tabs {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  transition: .5s;
+  height: 80%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.tab:hover, .tab-active {
+  border-radius: 10px;
+  background-color: #f0efef;
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+  transition: .5s;
+}
+
+.tab > a {
+  text-decoration: none;
+  color: black;
+}
+
+.content-container {
+
+}

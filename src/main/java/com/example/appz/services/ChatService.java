@@ -20,38 +20,46 @@ public class ChatService {
     @Autowired
     private ChatRepository chatRepository;
 
+    @Autowired
+    private MessageMapper messageMapper;
+    
+    @Autowired
+    private ChatMapper chatMapper;
+
     public ChatDTO getById(long id) {
         log.info("Retrieving chat with id " + id);
         Chat chat = chatRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Chat with id " + id + " was not found"));
 
-        return ChatMapper.INSTANCE.map(chat);
+        return chatMapper.map(chat);
     }
 
     public List<ChatDTO> getAllForUser(long userId) {
         log.info("Retrieving al chats");
         List<Chat> allChats = chatRepository.getAllByUser(userId);
 
-        return ChatMapper.INSTANCE.map(allChats);
+        return chatMapper.map(allChats);
     }
 
-    public ChatDTO create(ChatDTO chatDTO) {
+    public ChatDTO create() {
         log.info("Creating new chat");
-        Chat chat = ChatMapper.INSTANCE.mapChatDto(chatDTO);
+//        Chat chat = chatMapper.mapChatDto(chatDTO);
+
+        Chat chat = new Chat();
 
         Chat savedChat = chatRepository.save(chat);
 
-        return ChatMapper.INSTANCE.map(savedChat);
+        return chatMapper.map(savedChat);
     }
 
     @Transactional
     public ChatDTO update(ChatDTO chatDTO) {
         log.info("Updating chat with id " + chatDTO.getId());
-        Chat chat = ChatMapper.INSTANCE.mapChatDto(chatDTO);
+        Chat chat = chatMapper.mapChatDto(chatDTO);
 
         Chat updatedChat = chatRepository.save(chat);
 
-        return ChatMapper.INSTANCE.map(updatedChat);
+        return chatMapper.map(updatedChat);
     }
 
     public void delete(long id) {
@@ -65,12 +73,11 @@ public class ChatService {
     }
 
     @Transactional
-    public void addMessage(MessageDTO messageDTO) {
-        long chatId = messageDTO.getChatId();
+    public void addMessage(MessageDTO messageDTO, long chatId) {
         log.info("Adding new message to the chat " + chatId);
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new EntityNotFoundException("No chat with id " + chatId + " was found"));
-        chat.getMessages().add(MessageMapper.INSTANCE.mapMessageDto(messageDTO));
+        chat.getMessages().add(messageMapper.mapMessageDto(messageDTO));
         chatRepository.save(chat);
     }
 }

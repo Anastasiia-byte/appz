@@ -12,8 +12,12 @@ public class Dwelling {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private double price;
     private String description;
+    private String photo;
+    private String location;
+    private int numberOfRooms;
+    private boolean arranged;
+    private boolean balcony;
     @ManyToOne
     private Lessor lessor;
 }
