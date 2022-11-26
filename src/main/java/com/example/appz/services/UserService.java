@@ -2,6 +2,7 @@ package com.example.appz.services;
 
 import com.example.appz.dtos.UserDTO;
 import com.example.appz.dtos.mappers.UserMapper;
+import com.example.appz.entities.Role;
 import com.example.appz.entities.User;
 import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.repositories.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -38,6 +40,7 @@ public class UserService {
         log.info("Creating a new user with email" + userDTO.getEmail());
         User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(Role.USER));
         return UserMapper.INSTANCE.map(userRepository.save(user));
     }
 

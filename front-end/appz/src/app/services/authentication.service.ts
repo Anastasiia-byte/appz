@@ -27,6 +27,10 @@ export class AuthenticationService {
     return this.httpClient.post<void>(`${this.serverUrl}/login`, {email, password});
   }
 
+  public register(user: any): Observable<void> {
+    return this.httpClient.post<void>(`${this.serverUrl}/register`, user);
+  }
+
   public logout(): void {
     localStorage.removeItem('user');
     this.userSubject.next(new User());

@@ -35,6 +35,7 @@ public class LoginController {
         SecurityContextHolder.getContext().setAuthentication(authenticate);
     }
 
+    @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/register")
     public UserDTO register(@RequestBody @Validated UserDTO userDTO) {

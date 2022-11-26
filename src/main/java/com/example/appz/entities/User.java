@@ -18,6 +18,7 @@ public class User {
     private String email;
     private String password;
     private Date birthDate;
+    private String location;
 
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
