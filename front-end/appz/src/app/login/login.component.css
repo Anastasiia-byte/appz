@@ -1,0 +1,9 @@
+.login-container {
+  margin: 10px;
+  background-color: #faebd7;
+}
+
+.fields-container {
+  display: flex;
+  flex-direction: column;
+}
