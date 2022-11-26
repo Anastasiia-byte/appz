@@ -10,17 +10,19 @@ import {Router} from "@angular/router";
 export class AuthenticationService {
   private readonly serverUrl = 'http://localhost:8080/api'
 
-  private userSubject: BehaviorSubject<User>;
-  private user: Observable<User>;
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public constructor(private router: Router,
                      private httpClient: HttpClient) {
-    // this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem("user")));
-    // this.user = this.userSubject.asObservable();
   }
 
-  public get currentUserValue(): User {
-    return this.userSubject.value;
+  public get loggedInValue(): boolean {
+    return this.loggedIn.value;
+  }
+
+  public setLoggedInValue(isLoggedIn: boolean)
+  {
+    this.loggedIn.next(isLoggedIn);
   }
 
   public login(email: string, password: string): Observable<void> {
@@ -32,8 +34,7 @@ export class AuthenticationService {
   }
 
   public logout(): void {
-    localStorage.removeItem('user');
-    this.userSubject.next(new User());
+    this.loggedIn.next(false)
     this.router.navigate(['/login']);
   }
 
