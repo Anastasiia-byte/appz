@@ -8,6 +8,15 @@
       <a [routerLink]="['/chats']" routerLinkActive #chatsLink="routerLinkActive">Chats</a>
     </div>
   </div>
+
+  <div class="auth-buttons">
+    <div>
+      <button mat-button [routerLink]="['/register']">Sign In</button>
+    </div>
+    <div>
+      <button mat-raised-button class="login-button">Sign Up</button>
+    </div>
+  </div>
 </mat-toolbar>
 
 <div class="content-container">
