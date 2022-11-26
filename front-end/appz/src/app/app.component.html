@@ -1,5 +1,5 @@
 <mat-toolbar class="nav-bar">
-  <div class="tabs">
+  <div class="tabs" *ngIf="authenticationService.loggedInValue">
     <div class="tab" [class.tab-active]="dwellingsLink.isActive">
       <a [routerLink]="['/dwellings']" routerLinkActive #dwellingsLink="routerLinkActive">Dwellings</a>
     </div>
@@ -10,11 +10,14 @@
   </div>
 
   <div class="auth-buttons">
-    <div>
+    <div *ngIf="!authenticationService.loggedInValue">
       <button mat-button [routerLink]="['/login']">Sign In</button>
     </div>
-    <div>
+    <div *ngIf="!authenticationService.loggedInValue">
       <button mat-raised-button class="login-button" [routerLink]="['/register']">Sign Up</button>
+    </div>
+    <div *ngIf="authenticationService.loggedInValue">
+      <button mat-button (click)="logout()">Log out</button>
     </div>
   </div>
 </mat-toolbar>

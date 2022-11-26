@@ -1,9 +1,24 @@
 .login-container {
-  margin: 10px;
+  margin: 10px auto;
   background-color: #faebd7;
 }
 
 .fields-container {
   display: flex;
   flex-direction: column;
+}
+
+mat-card {
+  width: 300px;
+  padding: 30px;
+}
+
+.login-button {
+  background-color: #fcdfb8;
+  width: 100%;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
 }

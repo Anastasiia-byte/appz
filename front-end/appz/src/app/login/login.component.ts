@@ -43,8 +43,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.f.email.value, this.f.password.value)
       .subscribe({
         next: () => {
-          console.warn("dskfjsdlkfjdsklfndsklnfkdslnvlsd")
-          // get return url from query parameters or default to home page
+          this.authenticationService.setLoggedInValue(true);
           this.router.navigate(['/dwellings'], {});
         },
         error: error => {
