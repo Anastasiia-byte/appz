@@ -1,0 +1,24 @@
+.register-container {
+  margin: 10px auto;
+  background-color: #faebd7;
+  width: 300px;
+  padding: 30px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-picker-input {
+  width: 235px;
+}
+
+.register-header {
+  display: flex;
+  justify-content: center;
+}
+
+.register-button {
+  background-color: #fcdfb8;
+}

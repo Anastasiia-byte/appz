@@ -30,16 +30,23 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.
+//                cors().and().csrf()
+//                .disable()
+//                .authorizeRequests()
+//                .antMatchers("/api/agreement/update",  "/api/agreement/delete/**", "/api/admins")
+//                .hasRole(Role.CONSULTANT.toString())
+//                .antMatchers("/api/login", "/api/register")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated();
+
         http.
                 cors().and().csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/agreement/update",  "/api/agreement/delete/**")
-                .hasRole(Role.CONSULTANT.toString())
-                .antMatchers("/api/login", "/api/register")
-                .permitAll()
-                .anyRequest()
-                .authenticated();
+                .antMatchers("/api/**")
+                .permitAll();
 
         return http.build();
     }

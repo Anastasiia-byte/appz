@@ -24,31 +24,39 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserMapper userMapper;
+
     public UserDTO getById(final long id) {
         log.info("Retrieving a user with id " + id);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " was not found"));
-        return UserMapper.INSTANCE.map(user);
+        return userMapper.map(user);
     }
 
     public List<UserDTO> getAll() {
         log.info("Retrieving all users");
-        return UserMapper.INSTANCE.map(userRepository.findAll());
+        return userMapper.map(userRepository.findAll());
+    }
+
+    public List<UserDTO> getAllConsultants() {
+        log.info("Retrieving all consultants");
+        return userMapper.map(userRepository.getAllConsultants());
     }
 
     public UserDTO create(UserDTO userDTO) {
         log.info("Creating a new user with email" + userDTO.getEmail());
-        User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
+        User user = userMapper.mapUserDTO(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Collections.singleton(Role.USER));
-        return UserMapper.INSTANCE.map(userRepository.save(user));
+        return userMapper.map(userRepository.save(user));
     }
 
     @Transactional
     public UserDTO update(UserDTO userDTO) {
         log.info("Updating a user with id " + userDTO.getId());
-        User user = UserMapper.INSTANCE.mapUserDTO(userDTO);
-        return UserMapper.INSTANCE.map(userRepository.save(user));
+        User user = userMapper.mapUserDTO(userDTO);
+        return userMapper.map(userRepository.save(user));
     }
 
     public void delete(long id) {

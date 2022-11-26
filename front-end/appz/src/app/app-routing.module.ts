@@ -3,6 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'dwellings',
+    pathMatch: 'full'
+  },
+  {
     path: 'chats',
     loadChildren: () => import('./chats/chats.module').then((m) => m.ChatsModule)
   },
@@ -21,6 +26,10 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then((m) => m.RegisterModule)
+  },
+  {
+    path: 'consultants',
+    loadChildren: () => import('./consultants/consultants.module').then((m) => m.ConsultantsModule)
   }
 ];
 

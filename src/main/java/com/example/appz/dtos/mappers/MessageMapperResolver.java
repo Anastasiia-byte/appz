@@ -11,13 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageMapperResolver {
     @Autowired
-    private ChatService chatService;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    private ChatMapper chatMapper;
 
     @Autowired
     private UserMapper userMapper;

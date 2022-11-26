@@ -25,6 +25,7 @@ public class UserDTO implements Hashable {
     private String password;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
+    private String location;
     private Set<Role> roles;
 
     @Override

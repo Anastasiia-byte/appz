@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/user")
 @Validated
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -33,6 +34,13 @@ public class UserController {
     public List<UserDTO> getAll() {
         log.info("Received request to get all users");
         return userService.getAll();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/consultants")
+    public List<UserDTO> getAllConsultants() {
+        log.info("Received request to get all admins");
+        return userService.getAllConsultants();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
