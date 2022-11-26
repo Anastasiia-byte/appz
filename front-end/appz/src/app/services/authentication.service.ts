@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {User} from "../models/user";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 
@@ -22,6 +21,7 @@ export class AuthenticationService {
 
   public setLoggedInValue(isLoggedIn: boolean)
   {
+    localStorage.setItem("isLoggedIn", String(isLoggedIn));
     this.loggedIn.next(isLoggedIn);
   }
 
@@ -34,6 +34,7 @@ export class AuthenticationService {
   }
 
   public logout(): void {
+    localStorage.removeItem("isLoggedIn");
     this.loggedIn.next(false)
     this.router.navigate(['/login']);
   }

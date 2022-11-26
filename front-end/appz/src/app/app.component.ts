@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "./services/authentication.service";
 
 @Component({
@@ -6,10 +6,18 @@ import {AuthenticationService} from "./services/authentication.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'appz';
 
   public constructor(public authenticationService: AuthenticationService) {
+  }
+
+  ngOnInit(): void {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn) {
+      this.authenticationService.setLoggedInValue(true);
+    }
   }
 
   logout() {
