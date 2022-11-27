@@ -11,6 +11,7 @@ import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.repositories.AgreementRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,13 @@ import java.util.List;
 @Slf4j
 @Service
 public class AgreementService {
+
+    @Value("${spring.mail.username}")
+    private String emailFrom;
+
+    @Value("${spring.mail.dwelling.subject}")
+    private String subject;
+
     @Autowired
     private AgreementRepository agreementRepository;
 
@@ -47,6 +55,9 @@ public class AgreementService {
 
     @Autowired
     private UserAgreementMapper userAgreementMapper;
+
+    @Autowired
+    private EmailService emailService;
 
     public AgreementDTO getById(long id) {
         log.info("Retrieving an agreement with id " + id);
@@ -77,7 +88,13 @@ public class AgreementService {
 
     public void delete(long id) {
         log.info("Deleting an agreement with id " + id);
+
+        UserAgreementDTO agreement = userAgreementMapper.map(agreementRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Agreement with id " + id + " was not found")));
         agreementRepository.deleteById(id);
+
+        emailService.send(agreement.getUser().getEmail(), subject, "Your dwelling agreement was declined. " +
+                "Contact your consultant to receive more details.", emailFrom);
     }
 
     public List<AgreementDTO> getAll() {
@@ -119,6 +136,11 @@ public class AgreementService {
         }
 
         agreementDTO.setComplete(true);
-        return userAgreementMapper.map(agreementRepository.save(agreementMapper.mapAgreementDto(agreementDTO)));
+        UserAgreementDTO agreement = userAgreementMapper.map(agreementRepository.save(agreementMapper.mapAgreementDto(agreementDTO)));
+
+        emailService.send(agreement.getUser().getEmail(), subject, "Your dwelling agreement was accepted! " +
+                "Contact your consultant to receive more details!", emailFrom);
+
+        return agreement;
     }
 }

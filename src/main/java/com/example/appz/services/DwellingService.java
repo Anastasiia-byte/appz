@@ -2,7 +2,6 @@ package com.example.appz.services;
 
 import com.example.appz.dtos.DwellingDTO;
 import com.example.appz.dtos.mappers.DwellingMapper;
-import com.example.appz.entities.CustomUserDetails;
 import com.example.appz.entities.Dwelling;
 import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.repositories.DwellingRepository;
@@ -25,6 +24,9 @@ public class DwellingService {
     
     @Autowired
     private DwellingMapper dwellingMapper;
+
+    @Autowired
+    private EmailService emailService;
 
     public DwellingDTO getById(long id) {
         log.info("Retrieving dwelling with id " + id);
