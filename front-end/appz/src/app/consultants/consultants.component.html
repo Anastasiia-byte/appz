@@ -1,20 +1,28 @@
 <mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
 
-<mat-card *ngIf="!loading">
-  <mat-card-content>
-    <mat-card *ngFor="let consultant of consultants">
-      <mat-card-header>
-        <mat-card-title>{{consultant.name}} {{consultant.surname}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Email: {{consultant.email}}</p>
-        <p>Location: {{consultant.location}}</p>
-        <mat-divider></mat-divider>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>EDIT</button>
-        <button mat-raised-button (click)="delete(consultant.id)" color="accent">DELETE</button>
-      </mat-card-actions>
-    </mat-card>
-  </mat-card-content>
-</mat-card>
+<div class="consultants" *ngIf="!loading">
+  <mat-card *ngFor="let consultant of consultants" class="consultants-container">
+    <mat-card-content>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{consultant.name}} {{consultant.surname}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Email: {{consultant.email}}</p>
+          <p>Location: {{consultant.location}}</p>
+          <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="edit(consultant)">EDIT</button>
+          <button mat-button (click)="delete(consultant.id)" color="warn">DELETE</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="add-button-container">
+  <button class="add-button" mat-fab (click)="add()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

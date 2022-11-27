@@ -2,9 +2,11 @@ package com.example.appz.repositories;
 
 import com.example.appz.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select u.location from users u where u.email = :email", nativeQuery = true)
     String getUserLocationByEmail(String email);
+
+    @Modifying
+    @Query(value = "update users u set name = :name, surname = :surname, birth_date = :birthDate, location = :location where u.id = :id", nativeQuery = true)
+    void update(String name, String surname, Date birthDate, String location, long id);
 }

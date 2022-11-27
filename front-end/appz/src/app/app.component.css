@@ -20,7 +20,7 @@
 
 .tab:hover, .tab-active {
   border-radius: 10px;
-  background-color: #f0efef;
+  background-color: #ffaf44;
   box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
   transition: .5s;
 }
@@ -36,5 +36,5 @@
 }
 
 .login-button {
-  background-color: #fcdfb8;
+  background-color: #ffaf44;
 }

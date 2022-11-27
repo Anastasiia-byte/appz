@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
-import {first} from "rxjs";
 
 @Component({
   selector: 'app-chat',

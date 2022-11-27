@@ -2,9 +2,9 @@ package com.example.appz.dtos;
 
 import com.example.appz.entities.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.Set;

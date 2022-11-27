@@ -1,0 +1,35 @@
+.form-container {
+  margin: 10px auto;
+  background-color: white;
+  width: 300px;
+  padding: 30px;
+}
+
+.fields-container {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card {
+  width: 300px;
+  padding: 30px;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.submit-button {
+  background-color: #fcdfb8;
+  width: 100%;
+}
+
+.date-picker-input {
+  width: 235px;
+}

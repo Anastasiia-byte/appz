@@ -14,3 +14,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 .loading-spinner {
   margin: 10px auto;
 }
+
+.custom-modal-box > mat-dialog-container {
+  background: #faebd7 !important;
+}

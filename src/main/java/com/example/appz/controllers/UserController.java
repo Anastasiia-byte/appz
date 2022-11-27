@@ -50,6 +50,13 @@ public class UserController {
         return userService.create(userDTO);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/consultant")
+    public UserDTO createConsultant(@Valid @RequestBody UserDTO userDTO) {
+        log.info("Received request to create a new consultant with email " + userDTO.getEmail());
+        return userService.createConsultant(userDTO);
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
     public UserDTO update(@Valid @RequestBody UserDTO userDTO) {

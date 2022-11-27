@@ -2,6 +2,7 @@ package com.example.appz.controllers.handler;
 
 import com.example.appz.exceptions.AgreementCreationException;
 import com.example.appz.exceptions.ApiError;
+import com.example.appz.exceptions.EmailAlreadyExistsException;
 import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.exceptions.validation.ValidationErrorResponse;
 import com.example.appz.exceptions.validation.Violation;
@@ -39,6 +40,16 @@ public class ErrorHandler {
         apiError.setMessage(ex.getMessage());
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<Object> onEmailAlreadyExistsException(EmailAlreadyExistsException ex){
+        log.error("handleEmailAlreadyExistsException: exception {}", ex.getMessage());
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)

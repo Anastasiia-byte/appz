@@ -4,6 +4,7 @@ import com.example.appz.dtos.UserDTO;
 import com.example.appz.dtos.mappers.UserMapper;
 import com.example.appz.entities.Role;
 import com.example.appz.entities.User;
+import com.example.appz.exceptions.EmailAlreadyExistsException;
 import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -68,15 +70,42 @@ public class UserService {
         return userMapper.map(userRepository.save(user));
     }
 
+    public UserDTO createConsultant(UserDTO userDTO) {
+        String email = userDTO.getEmail();
+        log.info("Creating a new consultant with email" + email);
+
+        if (checkEmailUnique(email)) {
+            throw new EmailAlreadyExistsException("User with email " + email + " already exists");
+        }
+
+        User user = userMapper.mapUserDTO(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(Role.CONSULTANT));
+        return userMapper.map(userRepository.save(user));
+    }
+
     @Transactional
     public UserDTO update(UserDTO userDTO) {
-        log.info("Updating a user with id " + userDTO.getId());
-        User user = userMapper.mapUserDTO(userDTO);
-        return userMapper.map(userRepository.save(user));
+        long id = userDTO.getId();
+        log.info("Updating a user with id " + id);
+
+        String email = userDTO.getEmail();
+        if (checkEmailUnique(email)) {
+            throw new EmailAlreadyExistsException("User with email " + email + " already exists");
+        }
+
+        userRepository.update(userDTO.getName(), userDTO.getSurname(), userDTO.getBirthDate(), userDTO.getLocation(), id);
+        return userMapper.map(userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Use with id " + id + " was not found")));
     }
 
     public void delete(long id) {
         log.info("Deleting a user with id " + id);
         userRepository.deleteById(id);
+    }
+
+    private boolean checkEmailUnique(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.isPresent();
     }
 }
