@@ -1,4 +1,6 @@
-<mat-card>
+<mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
+
+<mat-card *ngIf="!loading">
   <mat-card-content>
     <mat-card *ngFor="let consultant of consultants">
       <mat-card-header>

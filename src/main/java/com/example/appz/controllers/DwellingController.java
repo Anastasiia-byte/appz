@@ -13,6 +13,7 @@ import javax.validation.constraints.Min;
 import java.util.List;
 
 @Slf4j
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/dwelling")
 @Validated
@@ -20,6 +21,7 @@ public class DwellingController {
     @Autowired
     private DwellingService dwellingService;
 
+    @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public DwellingDTO getById(@PathVariable @Min(0) long id) {
@@ -27,6 +29,7 @@ public class DwellingController {
         return dwellingService.getById(id);
     }
 
+    @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<DwellingDTO> getAll() {
@@ -34,6 +37,7 @@ public class DwellingController {
         return dwellingService.getAll();
     }
 
+    @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public DwellingDTO create(@Valid @RequestBody DwellingDTO dwellingDTO) {
@@ -41,6 +45,7 @@ public class DwellingController {
         return dwellingService.create(dwellingDTO);
     }
 
+    @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
     public DwellingDTO update(@Valid @RequestBody DwellingDTO dwellingDTO) {
@@ -48,6 +53,7 @@ public class DwellingController {
         return dwellingService.update(dwellingDTO);
     }
 
+    @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable @Min(0) long id) {

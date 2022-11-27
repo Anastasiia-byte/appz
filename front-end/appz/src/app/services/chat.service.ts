@@ -3,6 +3,8 @@ import {Message} from "../models/message";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Chat} from "../models/chat";
+import {ChatConsultant} from "../models/chat-consultant";
+import {ChatUser} from "../models/chat-user";
 
 @Injectable({
   providedIn: 'root',
@@ -15,15 +17,15 @@ export class ChatService {
   constructor(private http: HttpClient) {
   }
 
-  public createChat(): Observable<Chat> {
-    return this.http.post<Chat>(this.chatEndpointUrl, {});
+  public createChat(): Observable<ChatConsultant> {
+    return this.http.post<ChatConsultant>(this.chatEndpointUrl, {});
   }
 
   public getChat(id: number): Observable<Chat> {
     return this.http.get<Chat>(`${this.chatEndpointUrl}/${id}`);
   }
 
-  public getAllForUser(userId: number): Observable<Chat[]> {
-    return this.http.get<Chat[]>(`${this.chatEndpointUrl}/all/${userId}`);
+  public getAllForUser(userId: number): Observable<ChatUser[]> {
+    return this.http.get<ChatUser[]>(`${this.chatEndpointUrl}/all/${userId}`);
   }
 }

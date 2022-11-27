@@ -1,9 +1,18 @@
-<mat-card class="chats-container">
-  <mat-card-content class="chats-content">
-    <mat-card class="chat" *ngFor="let chat of chats" [routerLink]="['/chat', chat.id]">
+<mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
+
+<mat-card class="chats-container" *ngIf="!loading">
+  <div class="empty-container" *ngIf="!chats?.length">
+    <h3>
+      <i>There are no chats</i>
+    </h3>
+  </div>
+
+  <mat-card-content class="chats-content" *ngIf="chats?.length">
+    <mat-card class="chat" *ngFor="let chat of chats" [routerLink]="['/chat', chat.chat.id]"
+              [queryParams]="{receiverId: chat.chat.messages[0].receiverId == userId ? chat.chat.messages[0].senderId : chat.chat.messages[0].receiverId}">
       <mat-card-content class="chat-container">
-        <span>User Name</span>
-        <p><b>User Name:</b> {{chat?.messages[chat.messages.length - 1].text}}</p>
+        <span><b>{{chat.receiverName}}</b></span>
+        <p><i><b>{{chat.lastMessageSenderName}}:</b> {{chat?.chat.messages[chat.chat.messages.length - 1].text}}</i></p>
       </mat-card-content>
     </mat-card>
   </mat-card-content>

@@ -1,10 +1,12 @@
-<mat-card class="chat-container">
+<mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
+
+<mat-card class="chat-container" *ngIf="!loading">
   <mat-card-content class="chat-content">
-    <div class="chat-messages">
+    <div #chatContainer [scrollTop]="scrollTop" class="chat-messages" id="chat-messages">
       <div *ngIf="chat?.messages">
         <div class="message" *ngFor="let receivedMessage of chat.messages"
-             [class.user-message]="receivedMessage.senderId == myId"
-             [class.consultant-message]="receivedMessage.senderId != myId">
+             [class.user-message]="receivedMessage.senderId == senderId"
+             [class.consultant-message]="receivedMessage.senderId != senderId">
           <span>{{receivedMessage.text}}</span>
         </div>
       </div>
@@ -20,8 +22,5 @@
         </button>
       </div>
     </div>
-    <button mat-mini-fab color="primary" (click)="sendMessage2()">
-      <mat-icon>send</mat-icon>
-    </button>
   </mat-card-content>
 </mat-card>

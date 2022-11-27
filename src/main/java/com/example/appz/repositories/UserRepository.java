@@ -14,4 +14,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select * from users u join user_roles r on u.id = r.user_id where r.roles = 1", nativeQuery = true)
     List<User> getAllConsultants();
+
+    @Query(value = "select u.id from users u join user_roles r on u.id = r.user_id where r.roles = 1", nativeQuery = true)
+    List<Long> getAllConsultantIds();
+
+    @Query(value = "select u.location from users u where u.email = :email", nativeQuery = true)
+    String getUserLocationByEmail(String email);
 }

@@ -8,8 +8,12 @@
       <a [routerLink]="['/chats']" routerLinkActive #chatsLink="routerLinkActive">Chats</a>
     </div>
 
-    <div class="tab" [class.tab-active]="consultantsLink.isActive">
+    <div class="tab" [class.tab-active]="consultantsLink.isActive" *ngIf="authenticationService.isConsultantValue">
       <a [routerLink]="['/consultants']" routerLinkActive #consultantsLink="routerLinkActive">Consultants</a>
+    </div>
+
+    <div class="tab" [class.tab-active]="agreementLink.isActive" *ngIf="authenticationService.isConsultantValue">
+      <a [routerLink]="['/agreements']" routerLinkActive #agreementLink="routerLinkActive">Agreements</a>
     </div>
   </div>
 

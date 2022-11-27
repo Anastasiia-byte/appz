@@ -1,6 +1,8 @@
 package com.example.appz.controllers;
 
+import com.example.appz.dtos.ChatConsultantDTO;
 import com.example.appz.dtos.ChatDTO;
+import com.example.appz.dtos.ChatUserDTO;
 import com.example.appz.services.ChatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,14 @@ public class ChatController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/all/{userId}")
-    public List<ChatDTO> getAllForUser(@PathVariable @Min(0) long userId) {
+    public List<ChatUserDTO> getAllForUser(@PathVariable @Min(0) long userId) {
         log.info("Received request to get all chats for user " + userId);
         return chatService.getAllForUser(userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ChatDTO create() {
+    public ChatConsultantDTO create() {
         log.info("Received request to create new chat");
         return chatService.create();
     }

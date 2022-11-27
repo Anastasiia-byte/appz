@@ -22,6 +22,10 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('token')) {
+      this.router.navigate(['/dwellings']);
+    }
+
     this.form = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -42,8 +46,14 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.login(this.f.email.value, this.f.password.value)
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.authenticationService.setLoggedInValue(true);
+          localStorage.setItem("email", this.f.email.value);
+          const data = response.data;
+          const dataArray = data.split(' ');
+          localStorage.setItem("token", dataArray[0]);
+          localStorage.setItem("userId", dataArray[1]);
+          this.authenticationService.setIsConsultantValue(dataArray[2] == "true");
           this.router.navigate(['/dwellings'], {});
         },
         error: error => {

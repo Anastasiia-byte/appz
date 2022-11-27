@@ -14,9 +14,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const isConsultant = localStorage.getItem("isConsultant");
 
     if (isLoggedIn) {
       this.authenticationService.setLoggedInValue(true);
+    }
+
+    if (isConsultant) {
+      this.authenticationService.setIsConsultantValue(isConsultant == "true");
     }
   }
 

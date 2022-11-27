@@ -2,11 +2,13 @@ package com.example.appz.services;
 
 import com.example.appz.dtos.DwellingDTO;
 import com.example.appz.dtos.mappers.DwellingMapper;
+import com.example.appz.entities.CustomUserDetails;
 import com.example.appz.entities.Dwelling;
 import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.repositories.DwellingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,9 @@ import java.util.List;
 public class DwellingService {
     @Autowired
     private DwellingRepository dwellingRepository;
+
+    @Autowired
+    private UserService userService;
     
     @Autowired
     private DwellingMapper dwellingMapper;
@@ -31,7 +36,9 @@ public class DwellingService {
 
     public List<DwellingDTO> getAll() {
         log.info("Retrieving all dwellings");
-        List<Dwelling> allDwellings = dwellingRepository.findAll();
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        List<Dwelling> allDwellings = dwellingRepository.findAllByLocation(userService.getUserLocationByEmail(email));
 
         return dwellingMapper.map(allDwellings);
     }

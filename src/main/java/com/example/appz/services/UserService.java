@@ -34,6 +34,12 @@ public class UserService {
         return userMapper.map(user);
     }
 
+    public UserDTO getByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " was not found"));
+        return userMapper.map(user);
+    }
+
     public List<UserDTO> getAll() {
         log.info("Retrieving all users");
         return userMapper.map(userRepository.findAll());
@@ -42,6 +48,16 @@ public class UserService {
     public List<UserDTO> getAllConsultants() {
         log.info("Retrieving all consultants");
         return userMapper.map(userRepository.getAllConsultants());
+    }
+
+    public List<Long> getAllConsultantIds() {
+        log.info("Retrieving all consultant ids");
+        return userRepository.getAllConsultantIds();
+    }
+
+    public String getUserLocationByEmail(String email) {
+        log.info("Retrieving location for user with email " + email);
+        return userRepository.getUserLocationByEmail(email);
     }
 
     public UserDTO create(UserDTO userDTO) {

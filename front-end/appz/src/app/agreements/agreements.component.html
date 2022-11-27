@@ -1,0 +1,55 @@
+<mat-spinner class="loading-spinner" *ngIf="loadingIncomplete || loadingCompleted"></mat-spinner>
+
+<mat-card class="agreements-container" *ngIf="!loadingIncomplete && !loadingCompleted">
+  <div class="empty-container" *ngIf="!incompleteAgreements?.length">
+    <h3>
+      <i>There are no incomplete agreements</i>
+    </h3>
+  </div>
+
+  <mat-card-content class="agreements-content" *ngIf="incompleteAgreements?.length">
+    <mat-accordion *ngFor="let agreement of incompleteAgreements">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span><b>{{agreement.dwelling.name}}</b></span>
+
+            <div class="action-buttons">
+              <button mat-raised-button class="accept-button" (click)="acceptAgreement($event, agreement.id)">Accept</button>
+              <button mat-stroked-button color="warn" (click)="declineAgreement($event, agreement.id)">Decline</button>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p><b>User:</b> {{agreement.user.name}} {{agreement.user.surname}}</p>
+        <p><b>Lessor:</b> {{agreement.dwelling.lessor.name}} {{agreement.dwelling.lessor.surname}}</p>
+        <p><b>Creation date:</b> {{agreement.date | date: 'yyyy-MM-dd'}}</p>
+        <p><b>Status:</b> {{agreement.complete ? "Completed" : "Incomplete"}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="agreements-container" *ngIf="!loadingIncomplete && !loadingCompleted">
+  <div class="empty-container" *ngIf="!completedAgreements?.length">
+    <h3>
+      <i>There are no completed agreements</i>
+    </h3>
+  </div>
+
+  <mat-card-content class="agreements-content" *ngIf="completedAgreements?.length">
+    <mat-accordion *ngFor="let agreement of completedAgreements">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span><b>{{agreement.dwelling.name}}</b></span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p><b>User:</b> {{agreement.user.name}} {{agreement.user.surname}}</p>
+        <p><b>Lessor:</b> {{agreement.dwelling.lessor.name}} {{agreement.dwelling.lessor.surname}}</p>
+        <p><b>Creation date:</b> {{agreement.date | date: 'yyyy-MM-dd'}}</p>
+        <p><b>Status:</b> {{agreement.complete ? "Completed" : "Incomplete"}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>
+

@@ -15,7 +15,7 @@ public class AgreementDTO {
     private DwellingDTO dwelling;
     private long userId;
     private byte[] publicKey;
-    private String userSignature;
-    private String lessorSignature;
+    private byte[] userSignature;
+    private byte[] lessorSignature;
     private boolean complete;
 }

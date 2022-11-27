@@ -1,8 +1,10 @@
 package com.example.appz.controllers;
 
 import com.example.appz.dtos.LoginUserDTO;
+import com.example.appz.dtos.ResponseDTO;
 import com.example.appz.dtos.UserDTO;
 import com.example.appz.entities.CustomUserDetails;
+import com.example.appz.entities.Role;
 import com.example.appz.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -29,10 +33,13 @@ public class LoginController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
-    public void login(@RequestBody @Validated LoginUserDTO loginUserDTO) {
+    public ResponseDTO<String> login(@RequestBody @Validated LoginUserDTO loginUserDTO) {
         CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(loginUserDTO.getEmail());
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDTO.getEmail(), loginUserDTO.getPassword(), userDetails.getAuthorities()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
+        ResponseDTO<String> responseDTO = new ResponseDTO<>();
+        responseDTO.setData(UUID.randomUUID() + " " + userDetails.getId() + " " + userDetails.getAuthorities().contains(Role.CONSULTANT));
+        return responseDTO;
     }
 
     @CrossOrigin(origins = "*")

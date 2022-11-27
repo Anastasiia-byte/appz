@@ -21,4 +21,5 @@ public class DwellingDTO {
     private boolean balcony;
     @NotBlank
     private String description;
+    private LessorDTO lessor;
 }

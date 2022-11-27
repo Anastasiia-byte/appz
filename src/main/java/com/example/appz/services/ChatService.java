@@ -1,10 +1,10 @@
 package com.example.appz.services;
 
-import com.example.appz.dtos.ChatDTO;
-import com.example.appz.dtos.MessageDTO;
+import com.example.appz.dtos.*;
 import com.example.appz.dtos.mappers.ChatMapper;
 import com.example.appz.dtos.mappers.MessageMapper;
 import com.example.appz.entities.Chat;
+import com.example.appz.entities.Message;
 import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.repositories.ChatRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @Service
@@ -26,6 +28,9 @@ public class ChatService {
     @Autowired
     private ChatMapper chatMapper;
 
+    @Autowired
+    private UserService userService;
+
     public ChatDTO getById(long id) {
         log.info("Retrieving chat with id " + id);
         Chat chat = chatRepository.findById(id)
@@ -34,22 +39,51 @@ public class ChatService {
         return chatMapper.map(chat);
     }
 
-    public List<ChatDTO> getAllForUser(long userId) {
+    public List<ChatUserDTO> getAllForUser(long userId) {
         log.info("Retrieving al chats");
         List<Chat> allChats = chatRepository.getAllByUser(userId);
 
-        return chatMapper.map(allChats);
+        List<ChatUserDTO> chatUserDTOS = new ArrayList<>();
+
+        for (Chat chat : allChats) {
+            ChatUserDTO chatUserDTO = new ChatUserDTO();
+            chatUserDTO.setChat(chatMapper.map(chat));
+
+            Message message = chat.getMessages().get(0);
+
+            String receiverName = message.getSender().getId() == userId
+                    ? message.getReceiver().getName() + " " + message.getReceiver().getSurname()
+                    : message.getSender().getName() + " " + message.getSender().getSurname();
+
+            Message lastMessage = chat.getMessages().get(chat.getMessages().size() - 1);
+
+            String lastMessageUserName = lastMessage.getSender().getName() + " " + lastMessage.getSender().getSurname();
+
+            chatUserDTO.setReceiverName(receiverName);
+            chatUserDTO.setLastMessageSenderName(lastMessageUserName);
+
+            chatUserDTOS.add(chatUserDTO);
+        }
+
+        return chatUserDTOS;
     }
 
-    public ChatDTO create() {
+    public ChatConsultantDTO create() {
         log.info("Creating new chat");
 //        Chat chat = chatMapper.mapChatDto(chatDTO);
 
         Chat chat = new Chat();
-
         Chat savedChat = chatRepository.save(chat);
+        ChatDTO chatDto = chatMapper.map(savedChat);
 
-        return chatMapper.map(savedChat);
+        List<Long> consultantIds = this.userService.getAllConsultantIds();
+        int random = new Random().nextInt(consultantIds.size());
+
+        ChatConsultantDTO chatConsultantDTO = new ChatConsultantDTO();
+        chatConsultantDTO.setChat(chatDto);
+        chatConsultantDTO.setConsultantId(consultantIds.get(random));
+
+        return chatConsultantDTO;
     }
 
     @Transactional

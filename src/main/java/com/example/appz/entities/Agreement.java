@@ -1,6 +1,5 @@
 package com.example.appz.entities;
 
-import com.example.appz.dtos.DwellingDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public class Agreement {
     private Dwelling dwelling;
     private long userId;
     private byte[] publicKey;
-    private String userSignature;
-    private String lessorSignature;
+    private byte[] userSignature;
+    private byte[] lessorSignature;
     private boolean complete;
 }

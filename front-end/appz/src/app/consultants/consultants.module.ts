@@ -11,10 +11,11 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDividerModule} from "@angular/material/divider";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [ConsultantsComponent],
-  imports: [ConsultantsRoutingModule, CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, ReactiveFormsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatDividerModule],
+    imports: [ConsultantsRoutingModule, CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, ReactiveFormsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatDividerModule, MatProgressSpinnerModule],
   providers: [MatDatepickerModule]
 })
 export class ConsultantsModule {}

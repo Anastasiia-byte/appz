@@ -36,20 +36,20 @@ public class DigitalSignatureService {
         return KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(keyEncoded));
     }
 
-    public String createDigitalSignature(Hashable dataObject) throws NoSuchAlgorithmException, NoSuchPaddingException,
+    public byte[] createDigitalSignature(Hashable dataObject) throws NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         String secretData = dataObject.getSecretData();
         byte[] dataHash = generateHash(secretData);
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-        return new String(cipher.doFinal(dataHash));
+        return cipher.doFinal(dataHash);
     }
 
-    public boolean verifySignature(String digitalSignature, Hashable dataObject, PublicKey publicKey) throws NoSuchPaddingException,
+    public boolean verifySignature(byte[] digitalSignature, Hashable dataObject, PublicKey publicKey) throws NoSuchPaddingException,
             NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, publicKey);
-        byte[] decryptedMessageHash = cipher.doFinal(digitalSignature.getBytes());
+        byte[] decryptedMessageHash = cipher.doFinal(digitalSignature);
 
         byte[] hashedMessage = generateHash(dataObject.getSecretData());
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ChatService} from "../services/chat.service";
-import {Chat} from "../models/chat";
+import {ChatUser} from "../models/chat-user";
 
 @Component({
   selector: 'app-chats',
@@ -8,16 +8,21 @@ import {Chat} from "../models/chat";
   styleUrls: ['./chats.component.css']
 })
 export class ChatsComponent implements OnInit {
-  private userId = 1;
+  public userId: number;
+  public loading: boolean;
 
-  public chats: Chat[];
+  public chats: ChatUser[];
 
   constructor(private chatService: ChatService) {
   }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.userId = Number(localStorage.getItem('userId'));
+
     this.chatService.getAllForUser(this.userId).subscribe(chats => {
       this.chats = chats;
+      this.loading = false;
     });
   }
 

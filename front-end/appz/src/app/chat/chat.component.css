@@ -12,6 +12,7 @@
   height: 400px;
   background-color: white;
   border-radius: 5px;
+  overflow-y: scroll;
 }
 
 .message-container {

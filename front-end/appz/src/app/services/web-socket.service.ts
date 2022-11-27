@@ -6,7 +6,7 @@ import {
 import * as Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import {Message} from "../models/message";
-import {Client} from "stompjs";
+import {Client, Subscription} from "stompjs";
 
 @Injectable({
   providedIn: 'root',
@@ -18,17 +18,13 @@ export class WebSocketService {
   public messages = new Subject<Message>();
 
   public createWebSocketConnection(id: number): void {
-    console.error('kkk');
     let ws = new SockJS(this.serverUrl);
-    console.error(ws);
     this.stompClient = Stomp.over(ws);
     let that = this;
     this.stompClient.connect({}, function(frame) {
-      console.error('lel')
       that.stompClient?.subscribe("/queue/" + id, (message) => {
         if(message.body) {
           that.messages.next(JSON.parse(message.body));
-          console.log(message.body);
         }
       });
     });

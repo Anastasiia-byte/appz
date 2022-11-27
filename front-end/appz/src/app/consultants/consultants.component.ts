@@ -8,15 +8,18 @@ import {UserService} from "../services/user.service";
   styleUrls: ['./consultants.component.css']
 })
 export class ConsultantsComponent implements OnInit{
+  public loading: boolean;
   public consultants: User[];
 
   public constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.userService.getAllConsultants().subscribe(consultants =>{
       this.consultants = consultants;
-    })
+      this.loading = false;
+    });
   }
 
   public delete(id: number) {

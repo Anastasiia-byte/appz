@@ -1,11 +1,9 @@
 package com.example.appz.services;
 
-import com.example.appz.dtos.AgreementDTO;
-import com.example.appz.dtos.CreateAgreementDTO;
-import com.example.appz.dtos.LessorDTO;
-import com.example.appz.dtos.UserDTO;
+import com.example.appz.dtos.*;
 import com.example.appz.dtos.mappers.AgreementMapper;
 import com.example.appz.dtos.mappers.LessorMapper;
+import com.example.appz.dtos.mappers.UserAgreementMapper;
 import com.example.appz.entities.Agreement;
 import com.example.appz.entities.Lessor;
 import com.example.appz.exceptions.AgreementCreationException;
@@ -47,6 +45,9 @@ public class AgreementService {
     @Autowired
     private AgreementMapper agreementMapper;
 
+    @Autowired
+    private UserAgreementMapper userAgreementMapper;
+
     public AgreementDTO getById(long id) {
         log.info("Retrieving an agreement with id " + id);
         Agreement agreement = agreementRepository.findById(id)
@@ -61,9 +62,10 @@ public class AgreementService {
         AgreementDTO agreementDTO = new AgreementDTO();
         agreementDTO.setDwelling(dwellingService.getById(createAgreementDTO.getDwellingId()));
         agreementDTO.setDate(LocalDateTime.now());
-        agreementDTO.setUserId(createAgreementDTO.getUserId());
+        UserDTO user = userService.getByEmail(createAgreementDTO.getUserEmail());
+        agreementDTO.setUserId(user.getId());
         try {
-            agreementDTO.setUserSignature(digitalSignatureService.createDigitalSignature(userService.getById(createAgreementDTO.getUserId())));
+            agreementDTO.setUserSignature(digitalSignatureService.createDigitalSignature(user));
         } catch (Exception e) {
             throw new AgreementCreationException("User digital signature was not verified");
         }
@@ -83,13 +85,20 @@ public class AgreementService {
         return agreementMapper.map(agreementRepository.findAll());
     }
 
+    public List<UserAgreementDTO> getAllByComplete(boolean complete) {
+        log.info("Retrieving all agreements where complete is " + complete);
+        return userAgreementMapper.map(agreementRepository.findAllByCompleteIs(complete));
+    }
+
     @Transactional
-    public AgreementDTO update(AgreementDTO agreementDTO) {
+    public UserAgreementDTO update(long id) {
+        AgreementDTO agreementDTO = getById(id);
+
         log.info("Updating agreement with id " + agreementDTO.getId());
 
         PublicKey publicKey;
         try {
-           publicKey  = digitalSignatureService.setPublicKey(agreementDTO.getPublicKey());
+           publicKey = digitalSignatureService.setPublicKey(agreementDTO.getPublicKey());
         } catch (NoSuchAlgorithmException | InvalidKeySpecException exception) {
             throw new AgreementCreationException("Error when creating agreement");
         }
@@ -110,6 +119,6 @@ public class AgreementService {
         }
 
         agreementDTO.setComplete(true);
-        return agreementMapper.map(agreementRepository.save(agreementMapper.mapAgreementDto(agreementDTO)));
+        return userAgreementMapper.map(agreementRepository.save(agreementMapper.mapAgreementDto(agreementDTO)));
     }
 }

@@ -2,3 +2,15 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #fcdfb8 }
+
+.empty-container {
+  text-align: center;
+}
+
+.empty-container > h3 {
+  margin-bottom: 0;
+}
+
+.loading-spinner {
+  margin: 10px auto;
+}

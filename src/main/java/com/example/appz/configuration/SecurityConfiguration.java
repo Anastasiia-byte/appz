@@ -1,5 +1,6 @@
 package com.example.appz.configuration;
 
+import com.example.appz.configuration.filters.AuthFilter;
 import com.example.appz.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +25,9 @@ public class SecurityConfiguration {
     @Autowired
     AuthenticationConfiguration authenticationConfiguration;
 
+    @Autowired
+    private AuthFilter authFilter;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -30,23 +35,23 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.
-//                cors().and().csrf()
-//                .disable()
-//                .authorizeRequests()
-//                .antMatchers("/api/agreement/update",  "/api/agreement/delete/**", "/api/admins")
-//                .hasRole(Role.CONSULTANT.toString())
-//                .antMatchers("/api/login", "/api/register")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated();
-
         http.
                 cors().and().csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/**")
-                .permitAll();
+                .antMatchers("/api/login", "/api/register", "/chat/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
+
+        http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+
+//        http.
+//                cors().and().csrf()
+//                .disable()
+//                .authorizeRequests()
+//                .antMatchers("/api/**")
+//                .permitAll();
 
         return http.build();
     }
