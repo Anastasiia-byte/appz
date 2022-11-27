@@ -1,5 +1,6 @@
 package com.example.appz.repositories;
 
+import com.example.appz.dtos.UserFullNameDTO;
 import com.example.appz.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -26,4 +27,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "update users u set name = :name, surname = :surname, birth_date = :birthDate, location = :location where u.id = :id", nativeQuery = true)
     void update(String name, String surname, Date birthDate, String location, long id);
+
+    @Modifying
+    @Query(value = "update users u set number_of_rooms = :numberOfRooms, balcony = :balcony, arranged = :arranged where u.email = :email", nativeQuery = true)
+    void fillUserInfo(Integer numberOfRooms, boolean balcony, boolean arranged, String email);
+
+    @Query(value = "select u.name, u.surname from users u where u.id = :id", nativeQuery = true)
+    UserFullNameDTO getUserFullNameById(long id);
 }

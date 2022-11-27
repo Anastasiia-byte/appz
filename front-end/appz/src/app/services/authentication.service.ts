@@ -3,6 +3,7 @@ import {BehaviorSubject, map, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Response} from "../models/response";
+import {RegisterInfo} from "../models/register-info";
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,10 @@ export class AuthenticationService {
 
   public register(user: any): Observable<void> {
     return this.httpClient.post<void>(`${this.serverUrl}/register`, user);
+  }
+
+  public fillUserInfo(registerInfo: RegisterInfo): Observable<void> {
+    return this.httpClient.put<void>(`${this.serverUrl}/register/info`, registerInfo);
   }
 
   public logout(): void {

@@ -39,7 +39,7 @@ public class SecurityConfiguration {
                 cors().and().csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/login", "/api/register", "/chat/**")
+                .antMatchers("/api/login", "/api/register/**", "/chat/**", "/notification/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

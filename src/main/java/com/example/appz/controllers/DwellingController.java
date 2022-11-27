@@ -1,6 +1,7 @@
 package com.example.appz.controllers;
 
 import com.example.appz.dtos.DwellingDTO;
+import com.example.appz.dtos.DwellingRequirementsDTO;
 import com.example.appz.services.DwellingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class DwellingController {
     @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<DwellingDTO> getAll() {
+    public DwellingRequirementsDTO getAll(@RequestParam boolean filter) {
         log.info("Received request to ger all dwellings");
-        return dwellingService.getAll();
+        return dwellingService.getAll(filter);
     }
 
     @CrossOrigin(origins = "*")

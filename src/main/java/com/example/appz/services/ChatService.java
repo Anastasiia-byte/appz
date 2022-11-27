@@ -7,6 +7,7 @@ import com.example.appz.entities.Chat;
 import com.example.appz.entities.Message;
 import com.example.appz.exceptions.EntityNotFoundException;
 import com.example.appz.repositories.ChatRepository;
+import com.example.appz.repositories.MessageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class ChatService {
 
     @Autowired
     private MessageMapper messageMapper;
+
+    @Autowired
+    private MessageRepository messageRepository;
     
     @Autowired
     private ChatMapper chatMapper;

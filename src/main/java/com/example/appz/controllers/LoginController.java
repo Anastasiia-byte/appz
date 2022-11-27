@@ -1,6 +1,7 @@
 package com.example.appz.controllers;
 
 import com.example.appz.dtos.LoginUserDTO;
+import com.example.appz.dtos.RegisterInfoDTO;
 import com.example.appz.dtos.ResponseDTO;
 import com.example.appz.dtos.UserDTO;
 import com.example.appz.entities.CustomUserDetails;
@@ -47,5 +48,12 @@ public class LoginController {
     @PostMapping("/register")
     public UserDTO register(@RequestBody @Validated UserDTO userDTO) {
         return userService.create(userDTO);
+    }
+
+    @CrossOrigin(origins = "*")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/register/info")
+    public void registerInfo(@RequestBody @Validated RegisterInfoDTO registerInfoDTO) {
+        userService.fillUserInfo(registerInfoDTO);
     }
 }

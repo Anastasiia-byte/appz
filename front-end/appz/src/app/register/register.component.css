@@ -22,3 +22,7 @@
 .register-button {
   background-color: #fcdfb8;
 }
+
+.form-checkbox {
+  padding-bottom: 1.25em;
+}

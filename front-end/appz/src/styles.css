@@ -15,6 +15,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
   margin: 10px auto;
 }
 
+.snackbar-error {
+  background-color: red;
+}
+
+.snackbar-success {
+  background-color: green;
+}
+
+.snackbar-info {
+  background-color: #faebd7;
+  color: black;
+}
+
 .custom-modal-box > mat-dialog-container {
   background: #faebd7 !important;
 }

@@ -21,6 +21,11 @@ public class User {
     private Date birthDate;
     private String location;
 
+    @Column(name = "number_of_rooms")
+    private Integer numberOfRooms;
+    private boolean balcony;
+    private boolean arranged;
+
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     private Set<Role> roles;

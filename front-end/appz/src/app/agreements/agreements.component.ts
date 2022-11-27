@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {AgreementService} from "../services/agreement.service";
 import {Agreement} from "../models/agreement";
+import {SnackbarService} from "../services/snack-bar.service";
 
 @Component({
   selector: 'app-dwellings',
@@ -15,7 +16,7 @@ export class AgreementsComponent implements OnInit {
   public incompleteAgreements: Agreement[];
   public completedAgreements: Agreement[];
 
-  constructor(private agreementService: AgreementService, private router: Router) {
+  constructor(private agreementService: AgreementService, private router: Router, private snackBarService: SnackbarService) {
   }
 
   ngOnInit(): void {
@@ -37,7 +38,7 @@ export class AgreementsComponent implements OnInit {
     event.stopPropagation();
 
     this.agreementService.updateAgreement(id).subscribe((agreement) => {
-      alert("Success");
+      this.snackBarService.success("Success");
 
       this.incompleteAgreements.forEach((value, index) => {
         if (value.id == id) {
@@ -53,7 +54,7 @@ export class AgreementsComponent implements OnInit {
     event.stopPropagation();
 
     this.agreementService.deleteAgreement(id).subscribe(() => {
-      alert("Success");
+      this.snackBarService.success("Success");
 
       this.incompleteAgreements.forEach((value, index) => {
         if (value.id == id) {

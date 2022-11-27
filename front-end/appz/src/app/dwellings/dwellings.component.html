@@ -1,5 +1,18 @@
 <mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
 
+<div class="filter-buttons" *ngIf="!loading">
+  <button mat-raised-button class="dwelling-button" (click)="getFiltered(false)">Without filter</button>
+  <button mat-raised-button class="dwelling-button" (click)="getFiltered(true)">With filter</button>
+</div>
+
+<mat-card class="dwellings-container" *ngIf="!loading && !match && filter">
+  <div class="empty-container">
+    <h3>
+      <i>We can't find dwellings by your requirements. We show you all dwellings.</i>
+    </h3>
+  </div>
+</mat-card>
+
 <mat-card class="dwellings-container" *ngIf="!loading">
   <div class="empty-container" *ngIf="!dwellings?.length">
     <h3>
@@ -25,9 +38,9 @@
           <img class="dwelling-img" src="{{dwelling.photo}}" alt="dwelling">
         </div>
 
-        <div class="dwelling-buttons">
+        <div class="dwelling-buttons" *ngIf="!authService.isConsultantValue">
           <button mat-raised-button (click)="createAgreement(dwelling.id)">Make agreement</button>
-          <button mat-raised-button class="chat-button" (click)="createChat($event)">Contact consultant</button>
+          <button mat-raised-button class="dwelling-button" (click)="createChat()">Contact consultant</button>
         </div>
       </mat-expansion-panel>
     </mat-accordion>

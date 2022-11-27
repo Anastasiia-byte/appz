@@ -92,5 +92,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
+    this.wsService.closeChatWS();
   }
 }

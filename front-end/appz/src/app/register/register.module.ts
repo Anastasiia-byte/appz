@@ -10,10 +10,11 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatIconModule} from "@angular/material/icon";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [RegisterComponent],
-  imports: [RegisterRoutingModule, CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, ReactiveFormsModule, MatDatepickerModule, MatIconModule, MatButtonModule],
+    imports: [RegisterRoutingModule, CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, ReactiveFormsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatCheckboxModule],
   providers: [MatDatepickerModule]
 })
 export class RegisterModule {}

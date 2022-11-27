@@ -1,4 +1,4 @@
-<mat-card class="register-container">
+<mat-card class="register-container" *ngIf="step == 1">
   <mat-card-header class="register-header">
     <mat-card-title>Registration</mat-card-title>
   </mat-card-header>
@@ -53,6 +53,33 @@
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+
+      <button mat-raised-button class="register-button" type="submit">Register</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="register-container" *ngIf="step == 2">
+  <mat-card-header class="register-header">
+    <mat-card-title>Dwelling Information</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="register-content">
+    <form class="example-form" [formGroup]="registerInfoForm" class="register-form" (ngSubmit)="sendRegisterInfo()">
+      <mat-form-field>
+        <mat-label>Number of rooms</mat-label>
+        <input type="number" matInput formControlName="numberOfRooms" placeholder="2" min="1">
+        <mat-error *ngIf="registerInfoForm.controls.numberOfRooms.hasError('required')">
+          Number of rooms is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <section class="form-checkbox">
+        <mat-checkbox formControlName="balcony">Balcony is required</mat-checkbox>
+      </section>
+
+      <section class="form-checkbox">
+        <mat-checkbox formControlName="arranged">Arranged is required</mat-checkbox>
+      </section>
 
       <button mat-raised-button class="register-button" type="submit">Register</button>
     </form>

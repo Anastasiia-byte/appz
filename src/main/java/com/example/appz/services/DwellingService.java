@@ -1,6 +1,8 @@
 package com.example.appz.services;
 
 import com.example.appz.dtos.DwellingDTO;
+import com.example.appz.dtos.DwellingRequirementsDTO;
+import com.example.appz.dtos.UserDTO;
 import com.example.appz.dtos.mappers.DwellingMapper;
 import com.example.appz.entities.Dwelling;
 import com.example.appz.exceptions.EntityNotFoundException;
@@ -11,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -36,13 +39,45 @@ public class DwellingService {
         return dwellingMapper.map(dwelling);
     }
 
-    public List<DwellingDTO> getAll() {
+    public DwellingRequirementsDTO getAll(boolean filter) {
         log.info("Retrieving all dwellings");
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        List<Dwelling> allDwellings = dwellingRepository.findAllByLocation(userService.getUserLocationByEmail(email));
+        DwellingRequirementsDTO dwellingRequirementsDTO = new DwellingRequirementsDTO();
 
-        return dwellingMapper.map(allDwellings);
+        List<Dwelling> dwellings = new ArrayList<>();
+
+        if (filter) {
+            String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            UserDTO user = userService.getByEmail(email);
+
+            dwellingRequirementsDTO.setMatch(true);
+
+            if (user.isBalcony() && user.isArranged()) {
+                dwellings = dwellingRepository.findDwellingByLocationAndNumberOfRoomsAndBalconyIsAndArrangedIs(user.getLocation(), user.getNumberOfRooms(), user.isBalcony(), user.isArranged());
+            } else if (user.isArranged()) {
+                dwellings = dwellingRepository.findDwellingByLocationAndNumberOfRoomsAndArrangedIs(user.getLocation(), user.getNumberOfRooms(), user.isArranged());
+            } else if (user.isBalcony()) {
+                dwellings = dwellingRepository.findDwellingByLocationAndNumberOfRoomsAndBalconyIs(user.getLocation(), user.getNumberOfRooms(), user.isBalcony());
+            } else {
+                dwellings = dwellingRepository.findAllByLocationAndNumberOfRooms(user.getLocation(), user.getNumberOfRooms());
+            }
+
+            if (dwellings.isEmpty()) {
+                dwellings = dwellingRepository.findAllByLocation(user.getLocation());
+            }
+        }
+
+        if (dwellings.isEmpty()) {
+            dwellings = dwellingRepository.findAll();
+            dwellingRequirementsDTO.setMatch(!filter);
+        }
+
+        List<DwellingDTO> dwellingDTOS = dwellingMapper.map(dwellings);
+
+        dwellingRequirementsDTO.setDwellings(dwellingDTOS);
+
+        return dwellingRequirementsDTO;
     }
 
     public DwellingDTO create(DwellingDTO dwellingDTO) {

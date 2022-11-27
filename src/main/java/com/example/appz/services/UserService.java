@@ -1,6 +1,8 @@
 package com.example.appz.services;
 
+import com.example.appz.dtos.RegisterInfoDTO;
 import com.example.appz.dtos.UserDTO;
+import com.example.appz.dtos.UserFullNameDTO;
 import com.example.appz.dtos.mappers.UserMapper;
 import com.example.appz.entities.Role;
 import com.example.appz.entities.User;
@@ -97,6 +99,17 @@ public class UserService {
         userRepository.update(userDTO.getName(), userDTO.getSurname(), userDTO.getBirthDate(), userDTO.getLocation(), id);
         return userMapper.map(userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Use with id " + id + " was not found")));
+    }
+
+    @Transactional
+    public void fillUserInfo(RegisterInfoDTO registerInfoDTO) {
+        userRepository.fillUserInfo(registerInfoDTO.getNumberOfRooms(),registerInfoDTO.isBalcony(), registerInfoDTO.isArranged(), registerInfoDTO.getEmail());
+    }
+
+    public String getUserFullNameById(long id) {
+        UserDTO user = getById(id);
+
+        return user.getName() + " " + user.getSurname();
     }
 
     public void delete(long id) {

@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Dwelling} from "../models/dwelling";
+import {DwellingRequirements} from "../models/dwelling-requirements";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class DwellingService {
   constructor(private http: HttpClient) {
   }
 
-  public getAllDwellings(): Observable<Dwelling[]> {
-    return this.http.get<Dwelling[]>(this.serverUrl);
+  public getAllDwellings(filter: boolean): Observable<DwellingRequirements> {
+    return this.http.get<DwellingRequirements>(`${this.serverUrl}?filter=${filter}`);
   }
 }

@@ -21,7 +21,11 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().equals("/api/login") || request.getRequestURI().equals("/api/register") || request.getRequestURI().matches("/chat/.*")) {
+        if (request.getRequestURI().equals("/api/login")
+                || request.getRequestURI().equals("/api/register")
+                || request.getRequestURI().matches("/chat/.*")
+                || request.getRequestURI().matches("/notification/.*")
+                || request.getRequestURI().equals("/api/register/info")) {
             doFilter(request, response, filterChain);
             return;
         }

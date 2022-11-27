@@ -3,6 +3,16 @@
   background-color: #faebd7;
 }
 
+.filter-buttons {
+  margin: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.filter-buttons > button {
+  background-color: #faebd7;
+}
+
 .dwellings-content {
   display: flex;
   flex-direction: column;
@@ -18,6 +28,6 @@
   width: 100%;
 }
 
-.chat-button {
+.dwelling-button {
   background-color: #fcdfb8;
 }

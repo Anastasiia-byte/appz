@@ -25,6 +25,9 @@ public class NotificationService {
     @Autowired
     private NotificationMapper notificationMapper;
 
+    @Autowired
+    private UserService userService;
+
     public List<NotificationDTO> getAllForUser(long userId) {
         log.info("Retrieving all notifications for user " + userId);
         return notificationMapper.map(notificationRepository.getAllByUser_Id(userId));
@@ -36,10 +39,14 @@ public class NotificationService {
         NotificationDTO notificationDTO = new NotificationDTO();
         notificationDTO.setMessageId(messageDTO.getId());
         notificationDTO.setUserId(messageDTO.getReceiverId());
+
+        String userFullName = userService.getUserFullNameById(messageDTO.getSenderId());
+
+        notificationDTO.setSenderFullName(userFullName);
         notificationDTO.setRead(false);
 
         notificationRepository.save(notificationMapper.mapNotificationDTO(notificationDTO));
-        simpMessagingTemplate.convertAndSend("/queue/notification/" + chatId, notificationDTO);
+        simpMessagingTemplate.convertAndSend("/queue/notification/" + messageDTO.getReceiverId(), notificationDTO);
     }
 
     public void delete(long id) {
