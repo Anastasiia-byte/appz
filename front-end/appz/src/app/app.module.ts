@@ -9,6 +9,7 @@ import {CommonModule} from "@angular/common";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatButtonModule} from "@angular/material/button";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
         MatToolbarModule,
         CommonModule,
         HttpClientModule,
-        MatButtonModule
+        MatButtonModule,
+        MatSnackBarModule
     ],
   providers: [
     {
